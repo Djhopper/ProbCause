@@ -13,4 +13,4 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
 
 print result
 for i in result:
-    print(i)
+    print i
