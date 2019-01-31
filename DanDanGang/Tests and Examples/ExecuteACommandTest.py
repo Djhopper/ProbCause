@@ -13,8 +13,9 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
         print i
     print()
 
-    result = bdb.execute("PREDICT x AS x_est CONFIDENCE confidence")
+    result = bdb.execute("SIMULATE y FROM testTable GIVEN x=2 LIMIT 10")
     print result
+    print()
 
     result = bdb.execute("SELECT * FROM testTable WHERE name='Alice'")
     for i in result:
