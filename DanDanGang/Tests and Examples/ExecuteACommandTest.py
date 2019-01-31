@@ -13,7 +13,8 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
         print i
     print()
 
-    result = bdb.execute("SIMULATE y FROM testTable GIVEN x=2 LIMIT 10")
+    pop = bdb.execute("CREATE POPULATION IF NOT EXISTS testPopulation FOR testTable WITH SCHEMA GUESS STATTYPES OF x,y; IGNORE name")
+    result = bdb.execute("SIMULATE y FROM testPopulation GIVEN x=2 LIMIT 20")
     print result
     print()
 
