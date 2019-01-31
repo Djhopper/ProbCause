@@ -6,7 +6,7 @@ def run(ip, port):
     connection = httplib.HTTPConnection(ip, port)
 
     # make request
-    connection.request("POST", "/", input("Please input your name:\n"))
+    connection.request("POST", "/", raw_input("Please input your name:\n"))
 
     # get response
     response = connection.getresponse()
