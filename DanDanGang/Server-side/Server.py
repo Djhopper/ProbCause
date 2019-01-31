@@ -1,8 +1,7 @@
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import bayeslite
 
-# Documentation for bayeslite:
-# http://probcomp.csail.mit.edu/dev/bayesdb/doc/api.html
+
 
 escape_char = '\n'
 '''
