@@ -1,9 +1,9 @@
-import http.client
+import httplib
 
 
 def run(ip, port):
     # make connection
-    connection = http.client.HTTPConnection(ip, port)
+    connection = httplib.HTTPConnection(ip, port)
 
     # make request
     connection.request("POST", "/", input("Please input your name:\n"))

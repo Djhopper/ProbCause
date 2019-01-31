@@ -1,4 +1,4 @@
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 
 
 class RequestHandler(BaseHTTPRequestHandler):
@@ -17,7 +17,7 @@ class RequestHandler(BaseHTTPRequestHandler):
 
         # output result back to client
         message = "Hello " + name
-        self.wfile.write(bytes(message, "utf8"))
+        self.wfile.write(message)
 
 
 def run(port, ip, server_class=HTTPServer, handler_class=RequestHandler, ):

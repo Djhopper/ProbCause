@@ -1,4 +1,4 @@
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import bayeslite
 
 # Documentation for bayeslite:
@@ -34,7 +34,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'text/http')
         self.end_headers()
         message = "Can't fill your request (not implemented)"
-        self.wfile.write(bytes(message, "utf8"))
+        self.wfile.write(bytes(message))
 
 
 def run_server(port, ip):
