@@ -1,5 +1,4 @@
 import bayeslite
-import bdbcontrib
 
 
 db_pathname = 'foo.bdb'
