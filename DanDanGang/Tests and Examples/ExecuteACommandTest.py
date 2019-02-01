@@ -26,6 +26,3 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
     for i in result:
         print i
     print()
-
-
-table =
