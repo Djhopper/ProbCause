@@ -14,10 +14,8 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
         print i
     print()
 
-    #pop = bdb.execute("CREATE POPULATION testPopulation FOR testTable WITH SCHEMA (SET STATTYPES OF x,y TO numerical, numerical; IGNORE name;)")
-    pop = bdb.execute("CREATE POPULATION FOR testTable (GUESS STATTYPES OF (*));")
+    pop = bdb.execute("CREATE POPULATION testPopulation FOR testTable WITH SCHEMA (SET STATTYPES OF x,y TO numerical, numerical; IGNORE name;);")
     result = bdb.execute("SIMULATE y FROM testPopulation GIVEN x=2 LIMIT 20")
-    #result = bdb.execute("PROBABILITY DENSITY OF x GIVEN y=2;")
     print result
     print()
 
