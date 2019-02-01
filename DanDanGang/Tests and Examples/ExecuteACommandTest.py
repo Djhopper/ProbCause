@@ -14,7 +14,8 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
 
     # Print out Alice's row
     result = bdb.execute("SELECT * FROM testTable WHERE name='Alice';")
-    print "Result of the query: "+result[0]+"\n"
+    for i in result:
+        print "Result of the first select: "+str(i)+"\n"
 
     # Create a population with which to do a simulation
     pop = bdb.execute("CREATE POPULATION testPopulation FOR testTable WITH SCHEMA (SET STATTYPES OF x,y TO numerical, numerical; IGNORE name;);")  # Crashes on this query D:
@@ -24,4 +25,5 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
 
     # Print out Alice's row again
     result = bdb.execute("SELECT * FROM testTable WHERE name='Alice';")
-    print "Result of the query: " + result[0] + "\n"
+    for i in result:
+        print "Result of the first select: "+str(i)+"\n"
