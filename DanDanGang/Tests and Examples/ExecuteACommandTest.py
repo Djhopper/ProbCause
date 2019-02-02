@@ -16,14 +16,13 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
         bdb.sql_execute("INSERT INTO testTable VALUES(?, ?, ?);", (name, x, y))
 
     # Create a population with which to do a simulation
-    pop = bdb.execute(
-        "CREATE POPULATION IF NOT EXISTS testPopulation FOR testTable WITH SCHEMA (MODEL x,y AS NUMERICAL; IGNORE name;);")
+    # bdb.execute(
+    #    "CREATE POPULATION IF NOT EXISTS testPopulation FOR testTable WITH SCHEMA (MODEL x,y AS NUMERICAL; IGNORE name;);")
+    bdb.execute(
+        "CREATE POPULATION IF NOT EXISTS testPopulation FOR testTable WITH SCHEMA (GUESS STATTYPES FOR (*));")
     result = bdb.execute(
-        "SIMULATE y FROM testPopulation GIVEN x=2 LIMIT 20;")  # TODO: This returns an empty cursor, but shouldn't
-    print result
-    for i in result:
+        "SIMULATE x,y FROM testPopulation LIMIT 20;")  # TODO: This returns an empty cursor, but shouldn't
+    # result = bdb.execute("DEPENDENCE PROBABILITY OF y WITH x")
+    print result.fetchall()
+    for i in result.fetchall():
         print i
-
-
-
-
