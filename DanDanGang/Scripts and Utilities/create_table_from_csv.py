@@ -1,4 +1,4 @@
-from bayeslite import read_pandas.bayesdb_read_pandas_df
+from bayeslite import read_pandas
 import pandas as pd
 import io
 import requests
