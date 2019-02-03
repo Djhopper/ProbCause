@@ -4,8 +4,6 @@ db_pathname = 'foo.bdb'
 
 with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
     # Create TestTable
-    bdb.execute("DROP POPULATION IF EXISTS testPopulation;")
-    bdb.execute("DROP TABLE IF EXISTS testTable;")
     bdb.sql_execute('CREATE TABLE testTable(name TEXT, x INT, y INT);')
 
     # Fill it with some data
@@ -26,3 +24,8 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
     print result.fetchall()
     for i in result.fetchall():
         print i
+
+with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
+    # Clean-up
+    bdb.execute("DROP POPULATION IF EXISTS testPopulation;")
+    bdb.execute("DROP TABLE IF EXISTS testTable;")
