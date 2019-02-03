@@ -4,8 +4,8 @@ import io
 import requests
 
 
-def table_from_csv(bdb, table_name, file):
-    bayeslite.bayesdb_read_csv(bdb, table_name, file, header=True, create=True, ifnotexists=True)
+def table_from_csv(bdb, table_name, f):
+    bayeslite.bayesdb_read_csv(bdb, table_name, f, header=True, create=True, ifnotexists=True)
 
 
 def table_from_csv_url(bdb, table_name, url):

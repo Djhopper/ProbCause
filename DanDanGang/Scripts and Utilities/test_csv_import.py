@@ -1,6 +1,5 @@
 from create_table_from_csv import table_from_csv_url, table_from_csv
-import urllib.request
-
+import urllib2
 
 table_name = 'testTable'
 db_pathname = 'foo.bdb'
@@ -16,8 +15,8 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
 
 print "Test 2:"
 with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
-    with urllib.request.urlopen(url) as testfile, open('dataset.csv', 'w') as file:
-        table_from_csv(bdb, table_name, file)
+    with urllib2.urlopen(url) as f:
+        table_from_csv(bdb, table_name, f)
         result = bdb.execute('SELECT * FROM testTable LIMIT 10;')
         for i in result:
             print i
