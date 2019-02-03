@@ -1,4 +1,4 @@
-from create_table_from_csv import table_from_csv_url, table_from_csv
+from create_table_from_csv import table_from_url, table_from_csv
 import urllib2
 import bayeslite
 
@@ -8,7 +8,7 @@ url = 'https://data.chhs.ca.gov/dataset/e0216fbb-3739-4d92-9630-88d9f5686ac6/res
 
 print "Test 1:"
 with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
-    table_from_csv_url(bdb, table_name, url)
+    table_from_url(bdb, table_name, url)
     result = bdb.execute('SELECT * FROM testTable LIMIT 10;')
     for i in result:
         print i
