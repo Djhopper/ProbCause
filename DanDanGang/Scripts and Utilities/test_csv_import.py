@@ -1,5 +1,6 @@
 from create_table_from_csv import table_from_csv_url, table_from_csv
 import urllib2
+import bayeslite
 
 table_name = 'testTable'
 db_pathname = 'foo.bdb'
