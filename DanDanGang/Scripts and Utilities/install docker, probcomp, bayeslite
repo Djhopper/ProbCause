@@ -26,12 +26,16 @@ sudo apt-get install docker-ce
 
 echo "Docker installed."
 
-echo "Downloading probcomp stack"
+echo "Downloading probcomp stack..."
 
 wget https://probcomp-1.csail.mit.edu/probcomp-stack/probcomp-stack-full-0.3.1.tar.gz
 
 sudo docker load --input probcomp-stack-full-0.3.1.tar.gz
 
+echo "Using pip to install bayeslite..."
+
 sudo apt-get install -f python-pip
 
 pip install bayeslite
+
+echo "Done installing pip."
