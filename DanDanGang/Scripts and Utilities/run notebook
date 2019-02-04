@@ -1,0 +1,6 @@
+#!/bin/bash
+	 
+ssh probcause -L 8080:localhost:8080
+
+#GO TO LOCALHOST :))
+
