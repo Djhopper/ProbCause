@@ -4,7 +4,7 @@ import bayeslite
 
 table_name = 'testTable'
 db_pathname = 'foo.bdb'
-url = 'https://data.chhs.ca.gov/dataset/e0216fbb-3739-4d92-9630-88d9f5686ac6/resource/cdb50347-6fe1-456e-a336-d7daf0aba595/download/road-traffic-injuries-2002-2010.csv'
+url = 'https://query.data.world/s/3c26afdi4kinjoqe3idolsxxk2ph4b'  # from data.world
 
 print "Test 1:"
 with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
