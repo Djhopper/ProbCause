@@ -25,5 +25,5 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
 
 with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
     # Clean-up
-    bdb.execute("DROP POPULATION IF EXISTS testPopulation;")
-    bdb.execute("DROP TABLE IF EXISTS testTable;")
+    bdb.execute("DROP POPULATION IF EXISTS p;")
+    bdb.execute("DROP TABLE IF EXISTS t;")
