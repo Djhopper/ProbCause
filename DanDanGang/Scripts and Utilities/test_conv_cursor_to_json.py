@@ -14,5 +14,6 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
         "SELECT * FROM t")
     # Convert to json
     json = conv_cursor_to_json(result)
+    print json
     # Clean up
     bdb.execute("DROP TABLE t")
