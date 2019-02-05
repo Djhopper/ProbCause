@@ -1,16 +1,21 @@
 import bayeslite
+import random
+import matplotlib.pyplot as plt
 
 db_pathname = 'foo.bdb'
 
 
 with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
-    # Create TestTable
-    bdb.sql_execute('CREATE TABLE t(name TEXT, x INT, y INT);')
-
-    # Fill it with some data
-    for name, x, y in [['A', 1, 11], ['B', 2, 12], ['C', 3, 13]]:
+    # Create and populate table
+    bdb.sql_execute(
+        "CREATE TABLE t(name TEXT, x INT, y INT);")
+    for i in range(100):
+        name = random.choice(['Alice', 'Bob', 'Charlie'])
+        x = random.randint(1, 5)
+        y = random.randint(1, 3) + x
         bdb.sql_execute("INSERT INTO t VALUES(?, ?, ?);", (name, x, y))
 
+    # Do simulation
     bdb.execute(
         "CREATE POPULATION p FOR t (ignore name; x numerical; y numerical)")
     bdb.execute(
@@ -18,13 +23,18 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
     bdb.execute(
         "INITIALIZE 1 MODEL FOR g")
     bdb.execute(
-        "ANALYZE g FOR 10 SECONDS")
+        "ANALYZE g FOR 90 SECONDS")
     result = bdb.execute(
-        "SIMULATE x,y FROM p LIMIT 5")
+        "SIMULATE x,y FROM p LIMIT 50")
 
-    print result.fetchall()
+    # Plot results of simulation
+    sim = result.fetchall()
+    print sim
+    plt.scatter([x[0] for x in sim], [x[1] for x in sim])
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.show()
 
-with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
     # Clean-up
     bdb.execute("DROP GENERATOR IF EXISTS g;")
     bdb.execute("DROP POPULATION IF EXISTS p;")
