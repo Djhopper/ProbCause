@@ -22,7 +22,7 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
     bdb.execute(
         "INITIALIZE 1 MODEL FOR g")
     bdb.execute(
-        "ANALYZE g FOR 1 ITERATION WAIT")
+        "ANALYZE g FOR 10 SECONDS")
     result = bdb.execute(
         "SIMULATE x,y FROM p LIMIT 5")
 
