@@ -1,6 +1,6 @@
 import bayeslite
 import random
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 db_pathname = 'foo.bdb'
 
@@ -30,10 +30,10 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
     # Plot results of simulation
     sim = result.fetchall()
     print sim
-    plt.scatter([x[0] for x in sim], [x[1] for x in sim])
-    plt.xlabel('x')
-    plt.ylabel('y')
-    plt.show()
+    # plt.scatter([x[0] for x in sim], [x[1] for x in sim])
+    # plt.xlabel('x')
+    # plt.ylabel('y')
+    # plt.show()
 
     # Clean-up
     bdb.execute("DROP GENERATOR IF EXISTS g;")
