@@ -23,7 +23,7 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
         "INITIALIZE 1 MODEL FOR g")
     t = int(input("How long should we analyze for? "))
     bdb.execute(
-        "ANALYZE g FOR ? SECONDS", str(t))
+        "ANALYZE g FOR "+str(t)+" SECONDS")
     result = bdb.execute(
         "SIMULATE x,y FROM p LIMIT 50")
 
