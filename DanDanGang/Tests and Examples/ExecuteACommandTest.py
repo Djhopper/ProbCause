@@ -1,6 +1,5 @@
 import bayeslite
 import random
-#import matplotlib.pyplot as plt
 
 db_pathname = 'foo.bdb'
 
@@ -12,7 +11,7 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
     for i in range(100):
         name = random.choice(['Alice', 'Bob', 'Charlie'])
         x = random.randint(1, 5)
-        y = random.randint(1, 3) + x
+        y = random.randint(1, 3) + 8 + x
         bdb.sql_execute("INSERT INTO t VALUES(?, ?, ?);", (name, x, y))
 
     # Do simulation
@@ -22,18 +21,16 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
         "CREATE GENERATOR g FOR p")
     bdb.execute(
         "INITIALIZE 1 MODEL FOR g")
+    t = int(input("How long should we analyze for? "))
     bdb.execute(
-        "ANALYZE g FOR 90 SECONDS")
+        "ANALYZE g FOR ? SECONDS", t)
     result = bdb.execute(
         "SIMULATE x,y FROM p LIMIT 50")
 
-    # Plot results of simulation
+    # Print results of simulation
     sim = result.fetchall()
-    print sim
-    # plt.scatter([x[0] for x in sim], [x[1] for x in sim])
-    # plt.xlabel('x')
-    # plt.ylabel('y')
-    # plt.show()
+    for i in sim:
+        print i
 
     # Clean-up
     bdb.execute("DROP GENERATOR IF EXISTS g;")
