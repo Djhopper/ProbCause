@@ -1,10 +1,10 @@
-import bayeslite, random
+import bayeslite, random, crosscat
 
 db_pathname = 'foo.bdb'
 
 with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
     # Create TestTable
-    bdb.sql_execute('CREATE TABLE testTable(name TEXT, x INT, y INT);')
+    bdb.sql_execute('CREATE TABLE IF NOT EXISTS testTable(name TEXT, x INT, y INT);')
 
     # Fill it with some data
     for i in range(100):
@@ -17,9 +17,11 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
     # bdb.execute(
     #    "CREATE POPULATION IF NOT EXISTS testPopulation FOR testTable WITH SCHEMA (MODEL x,y AS NUMERICAL; IGNORE name;);")
     bdb.execute(
-        "CREATE POPULATION IF NOT EXISTS testPopulation FOR testTable WITH SCHEMA (GUESS STATTYPES FOR (*));")
+        "CREATE POPULATION IF NOT EXISTS testPopulation FOR testTable (ignore name; x numerical; y numerical);")
+    bdb.execute(
+    	"CREATE GENERATOR test_cc FOR testPopulation USING crosscat()")
     result = bdb.execute(
-        "SIMULATE x,y FROM testPopulation LIMIT 20;")  # TODO: This returns an empty cursor, but shouldn't
+        "SIMULATE x,y FROM testPopulation LIMIT 20")  # TODO: This returns an empty cursor, but shouldn't
     # result = bdb.execute("DEPENDENCE PROBABILITY OF y WITH x")
     print result.fetchall()
     for i in result.fetchall():
