@@ -17,3 +17,5 @@ conda create -n probcomp --yes \
 conda activate probcomp
 
 python -m pytest --pyargs bayeslite --pyargs iventure
+
+conda install -c conda-forge matplotlib
