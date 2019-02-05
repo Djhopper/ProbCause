@@ -8,7 +8,7 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
 
     # Fill it with some data
     for name, x, y in [['A', 1, 11], ['B', 2, 12], ['C', 3, 13]]:
-        bdb.sql_execute("INSERT INTO testTable VALUES(?, ?, ?);", (name, x, y))
+        bdb.sql_execute("INSERT INTO t VALUES(?, ?, ?);", (name, x, y))
 
     bdb.execute(
         "CREATE POPULATION p FOR t (ignore name; x numerical; y numerical)")
