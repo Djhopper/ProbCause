@@ -15,5 +15,6 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
     # Convert to json
     json = conv_cursor_to_json(result)
     print json
+    print json == [{"y": 11, "x": 1, "name": "A"}, {"y": 12, "x": 2, "name": "B"}, {"y": 13, "x": 3, "name": "C"}]
     # Clean up
     bdb.execute("DROP TABLE t")
