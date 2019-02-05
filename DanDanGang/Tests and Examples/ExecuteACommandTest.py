@@ -13,7 +13,7 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
     bdb.execute(
         "CREATE POPULATION p FOR t (ignore name; x numerical; y numerical)")
     bdb.execute(
-        "CREATE GENERATOR g FOR p USING crosscat()")  # Breaks HERE. "No such backend crosscat"
+        "CREATE GENERATOR g FOR p")
     bdb.execute(
         "INITIALIZE 1 MODEL FOR g")
     bdb.execute(

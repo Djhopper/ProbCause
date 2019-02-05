@@ -1,4 +1,4 @@
-from create_table_from_csv import table_from_url, table_from_csv
+from table_from_csv import table_from_url, table_from_csv
 import bayeslite
 
 table_name = 'testTable'
