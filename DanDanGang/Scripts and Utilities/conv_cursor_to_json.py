@@ -3,6 +3,7 @@ import bayeslite
 
 
 def conv_cursor_to_json(cursor):
+    A = cursor.fetchall()
     ds = []
     for row in A:
         d = {}
@@ -12,7 +13,7 @@ def conv_cursor_to_json(cursor):
     print "ds:"
     print ds
     r = [(dict((cursor.description[i][0], value))
-          for i, value in enumerate(row)) for row in cursor.fetchall()]
+          for i, value in enumerate(row)) for row in A]
     print "r:"
     print r
 
