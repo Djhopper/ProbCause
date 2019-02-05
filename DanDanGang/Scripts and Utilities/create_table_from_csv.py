@@ -10,6 +10,6 @@ def table_from_csv(bdb, table_name, f):
 
 def table_from_url(bdb, table_name, url):
     s = requests.get(url).content
-    df = pd.read_csv(StringIO.StringIO(s.decode('utf-8')))
+    df = pd.read_csv(StringIO.StringIO(s.decode('utf-8').encode('ascii', 'ignore').decode('ascii')))
     print df.index
     read_pandas.bayesdb_read_pandas_df(bdb, table_name, df, create=True, ifnotexists=True)
