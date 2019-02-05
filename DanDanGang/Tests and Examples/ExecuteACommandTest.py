@@ -4,6 +4,7 @@ db_pathname = 'foo.bdb'
 
 with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
     # Clean-up
+    bdb.execute("DROP GENERATOR IF EXISTS g;")
     bdb.execute("DROP POPULATION IF EXISTS p;")
     bdb.execute("DROP TABLE IF EXISTS t;")
 
@@ -30,5 +31,6 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
 
 with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
     # Clean-up
+    bdb.execute("DROP GENERATOR IF EXISTS g;")
     bdb.execute("DROP POPULATION IF EXISTS p;")
     bdb.execute("DROP TABLE IF EXISTS t;")
