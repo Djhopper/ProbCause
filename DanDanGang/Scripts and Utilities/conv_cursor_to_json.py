@@ -5,8 +5,9 @@ import bayeslite
 def conv_cursor_to_json(cursor):
     d = {}
     print "fetchall:"
-    print cursor.fetchall()
-    for row in cursor.fetchall():
+    A = cursor.fetchall()
+    print A
+    for row in A:
         print "row:"
         print row
         for i, column in enumerate(row):
