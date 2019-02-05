@@ -1,31 +1,23 @@
-import bayeslite, random, crosscat
+import bayeslite
 
 db_pathname = 'foo.bdb'
 
 with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
     # Create TestTable
-    bdb.sql_execute('CREATE TABLE IF NOT EXISTS testTable(name TEXT, x INT, y INT);')
+    bdb.sql_execute('CREATE TABLE t(name TEXT, x INT, y INT);')
 
     # Fill it with some data
-    for i in range(100):
-        name = random.choice(['A', 'B', 'C'])
-        x = random.randint(1, 5)
-        y = x + 8 + random.randint(1, 3)
+    for name, x, y in [['A', 1, 11], ['B', 2, 12], ['C', 3, 13]]:
         bdb.sql_execute("INSERT INTO testTable VALUES(?, ?, ?);", (name, x, y))
 
-    # Create a population with which to do a simulation
-    # bdb.execute(
-    #    "CREATE POPULATION IF NOT EXISTS testPopulation FOR testTable WITH SCHEMA (MODEL x,y AS NUMERICAL; IGNORE name;);")
     bdb.execute(
-        "CREATE POPULATION IF NOT EXISTS testPopulation FOR testTable (ignore name; x numerical; y numerical);")
+        "CREATE POPULATION p FOR t (ignore name; x numerical; y numerical)")
     bdb.execute(
-    	"CREATE GENERATOR test_cc FOR testPopulation USING crosscat()")
+        "CREATE GENERATOR g FOR p USING crosscat()")
     result = bdb.execute(
-        "SIMULATE x,y FROM testPopulation LIMIT 20")  # TODO: This returns an empty cursor, but shouldn't
-    # result = bdb.execute("DEPENDENCE PROBABILITY OF y WITH x")
+        "SIMULATE x,y FROM p LIMIT 5")
+
     print result.fetchall()
-    for i in result.fetchall():
-        print i
 
 with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
     # Clean-up
