@@ -12,8 +12,8 @@ def conv_cursor_to_json(cursor):
         ds.append(d)
     print "ds:"
     print ds
-    r = [(dict((cursor.description[i][0], value))
-          for i, value in enumerate(row)) for row in A]
+    r = [dict((cursor.description[i][0], value)
+              for i, value in enumerate(row)) for row in A]
     print "r:"
     print r
 
