@@ -1,0 +1,19 @@
+#!/bin/bash
+
+wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O /tmp/miniconda.sh
+
+wget https://raw.githubusercontent.com/probcomp/notebook/master/files/conda_python2.txt -O /tmp/conda_python2.txt
+
+wget https://raw.githubusercontent.com/probcomp/notebook/master/files/conda_probcomp_edge.txt -O /tmp/conda_probcomp_edge.txt
+
+bash /tmp/miniconda.sh -b -p ${HOME}/miniconda
+
+. ${HOME}/miniconda/etc/profile.d/conda.sh
+
+conda create -n probcomp --yes \
+    -c probcomp/label/edge -c cidermole -c fritzo -c ursusest \
+    python=2.7 --file /tmp/conda_python2.txt --file /tmp/conda_probcomp_edge.txt
+	
+conda activate probcomp
+
+python -m pytest --pyargs bayeslite --pyargs iventure
