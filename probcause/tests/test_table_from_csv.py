@@ -12,15 +12,15 @@ output = [
     "(u'2018-06-22 13:56:23 UTC', u'France', u'C', 86.48779, 2.7685299999999997, 0.54703, 2.54007, 0.25749, 0.20244, 2.76047, 4.7523, 1.99183, 0.79756, 0.20244, 0, 0, 1, 0.6470199999999999, 0.35063, 0.17142000000000002, 0.08782000000000001, u'2018-06-22 13:57:55 UTC')"
 ]
 
-print "Test 1:"
 with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
     table_from_url(bdb, table_name, url)
     result = bdb.execute('SELECT * FROM testTable LIMIT 3;')
     for i, x in enumerate(result):
+        print str(x)
         assert str(x) == output[i]
     bdb.execute("DROP TABLE IF EXISTS " + table_name)
 
-print "Test 2:"
+
 with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
     with open(file_name, 'r') as f:
         table_from_csv(bdb, table_name, f)
