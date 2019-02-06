@@ -1,4 +1,4 @@
-from ProbCause.util import table_from_url, table_from_csv
+from probcause.util import table_from_url, table_from_csv
 import bayeslite
 
 table_name = 'testTable'
