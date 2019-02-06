@@ -16,7 +16,7 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
     table_from_url(bdb, table_name, url)
     result = bdb.execute('SELECT * FROM testTable LIMIT 3;')
     for i, x in enumerate(result):
-        print str(x)
+        print 'result:{'+str(x)+'}'
         assert str(x) == output[i]
     bdb.execute("DROP TABLE IF EXISTS " + table_name)
 
