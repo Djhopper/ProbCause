@@ -1,5 +1,5 @@
 import bayeslite
-from probcause.util import conv_cursor_to_json
+from probcause.util.conv_cursor_to_json import conv_cursor_to_json
 import json
 
 db_pathname = 'foo.bdb'
