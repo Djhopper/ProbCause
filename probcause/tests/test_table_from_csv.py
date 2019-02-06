@@ -21,7 +21,7 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
     result = bdb.execute('SELECT * FROM testTable LIMIT 3;')
     for i, x in enumerate(result):
         print 't1:{'+str(x)+'}'
-        assert str(x) == output[i]
+        assert str(x) == output1[i]
     bdb.execute("DROP TABLE IF EXISTS " + table_name)
 
 
@@ -31,5 +31,5 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
         result = bdb.execute('SELECT * FROM testTable LIMIT 3;')
         for i, x in enumerate(result):
             print 't2:{' + str(x) + '}'
-            #assert str(x) == output[i]
+            #assert str(x) == output2[i]
     bdb.execute("DROP TABLE IF EXISTS " + table_name)
