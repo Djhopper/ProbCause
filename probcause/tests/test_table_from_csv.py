@@ -13,14 +13,15 @@ output1 = [
 ]
 
 output2 = [
-
+    "(u'2018-06-22 13:56:23 UTC', u'Brazil', u'E', 92.77421, 3.07229, 0.29255, 1.63175, 1.23547, 0.13278, 3.12477, 4.84411, 1.71934, 0.65263, 0.27308, 0.07429, 0, 0.92571, 0.65965, 0.45549, 0.29535, 0.1889, u'2018-06-22 13:57:55 UTC')",
+    "(u'2018-06-22 13:56:23 UTC', u'Spain', u'B', 91.38864, 3.27389, 0.4846, 1.66453, 1.22053, 0.11494, 2.27516, 5.95793, 3.68277, 0.56611, 0.41906, 0.01483, 0, 0.98517, 0.73972, 0.49728, 0.30724, 0.18647, u'2018-06-22 13:57:55 UTC')",
+    "(u'2018-06-22 13:56:23 UTC', u'France', u'C', 86.48779, 2.76853, 0.54703, 2.54007, 0.25749, 0.20244, 2.76047, 4.7523, 1.99183, 0.79756, 0.20244, 0, 0, 1, 0.64702, 0.35063, 0.17142, 0.08782, u'2018-06-22 13:57:55 UTC')"
 ]
 
 with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
     table_from_url(bdb, table_name, url)
     result = bdb.execute('SELECT * FROM testTable LIMIT 3;')
     for i, x in enumerate(result):
-        print 't1:{'+str(x)+'}'
         assert str(x) == output1[i]
     bdb.execute("DROP TABLE IF EXISTS " + table_name)
 
@@ -30,6 +31,5 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
         table_from_csv(bdb, table_name, f)
         result = bdb.execute('SELECT * FROM testTable LIMIT 3;')
         for i, x in enumerate(result):
-            print 't2:{' + str(x) + '}'
-            #assert str(x) == output2[i]
+            assert str(x) == output2[i]
     bdb.execute("DROP TABLE IF EXISTS " + table_name)
