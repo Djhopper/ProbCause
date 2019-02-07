@@ -20,10 +20,10 @@ Responses are 'text/http' in the case that an error occurs:
     
 Or 'application/json' in the normal case:
     [
-        {response1 },
-        {response2 },
+        [response1 ],
+        [response2 ],
         ...
-        {response3}
+        [response3 ]
     ]
 """
 
