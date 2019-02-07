@@ -47,17 +47,17 @@ def run(server_address, server_port):
 			f = open(srcfile, 'r')
 			lines = f.readlines()
 			queries = [q for q in queryfy(lines) if q != '']
-			msg = queries.join('\n')
+			msg = queries.join('\n')  # TODO Need .bdb name too
 		elif (opt == '--query'):
 			msg = val.replace('\n', ' ')
 
-	conn = httplib.HTTPSConnection(server_address, port)
+	conn = httplib.HTTPSConnection(server_address, server_port)
 	conn.request("POST", "/", msg)
 	
-	response = connection.getresponse()
+	response = conn.getresponse()
 	print("Got response.")
 
 if __name__ == "__main__":
-	server_address = '128.232.98.213' 
+	server_address = ''
 	server_port = 443
 	run(server_address, server_port)
