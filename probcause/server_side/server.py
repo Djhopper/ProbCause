@@ -88,4 +88,4 @@ def main(ip, port):
 
 
 if __name__ == '__main__':
-    main('', 443)
+    main('', 80)
