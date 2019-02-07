@@ -67,11 +67,11 @@ class RequestHandler(BaseHTTPRequestHandler):
                         break
 
         if not err:
-            self.send_header('Content-type', 'text/http')
+            self.send_header('Content-type', 'application/json')
             self.end_headers()
             message = RequestHandler.results_to_json(results)
         else:
-            self.send_header('Content-type', 'application/json')
+            self.send_header('Content-type', 'text/http')
             self.end_headers()
             message = str(err)
 
@@ -88,4 +88,4 @@ def main(ip, port):
 
 
 if __name__ == '__main__':
-    main('', 80)
+    main('', 443)
