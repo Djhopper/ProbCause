@@ -80,7 +80,7 @@ class RequestHandler(BaseHTTPRequestHandler):
 def main(ip, port):
     try:
         httpd = HTTPServer((ip, port), RequestHandler)
-        print "Running server on (" + httpd.server_address + ", " + httpd.server_port + ")"
+        print "Running server on (" + str(httpd.server_address)
         httpd.serve_forever()
     except KeyboardInterrupt:
         print "Stopping server."
