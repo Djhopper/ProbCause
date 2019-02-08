@@ -23,6 +23,7 @@ def test_server():
         [[], [], [], [{"y": 2, "x": 1, "name": "A"}, {"4": 12, "x": 3, "name": "B"}], []]
     )
     # Run server
+    print 0
     th = threading.Thread(target=server_thread())
     th.daemon = True
     th.start()
