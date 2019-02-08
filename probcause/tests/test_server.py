@@ -30,7 +30,7 @@ def test_server():
     th.start()
     print 1
     # Make request
-    connection = httplib.HTTPConnection('', port)
+    connection = httplib.HTTPConnection(ip, port)
     print 2
     connection.request("POST", "/", queries)
     print 3
