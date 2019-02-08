@@ -26,11 +26,16 @@ def test_server():
     th = threading.Thread(target=server_thread())
     th.daemon = True
     th.start()
+    print 1
     # Make request
     connection = httplib.HTTPConnection('', port)
+    print 2
     connection.request("POST", "/", queries)
+    print 3
     response = connection.getresponse()
+    print 4
     assert response == expected
+    print 5
 
 
 if __name__ == '__main__':
