@@ -11,6 +11,7 @@ request.
 
 query_delimiter = '*****'
 
+
 def lines_to_queries(lines):
 	whole_file = " ".join(lines)
 	queries = [query.replace("\n", " ") for query in whole_file.split(query_delimiter)]
@@ -32,9 +33,9 @@ def run(server_address, server_port):
 		print('Please provide either a file to read the query/queries from, or a string containing the query.')
 		print('Usage: send_request.py --db=<DB> [--file=<FILE>] [--query=<QUERY>]. Please provide at least one of the bracketed options.')
 		sys.exit(2)
-	db_given=False
+
+	db_given = False
 	msg = ''
-	# Generate message for http request
 	for opt, val in opts:  
 		if opt == '--file':
 			f = open(file=val, mode='r')
@@ -42,18 +43,18 @@ def run(server_address, server_port):
 			msg += "\n".join(queries) + '\n'  
 		elif opt == '--query':
 			msg += val.replace('\n', ' ') + '\n'
-		elif opt == '--db'
+		elif opt == '--db':
 			db_given = True
 			db_file = val
-	if (msg[-2:] == '\n'):
+	if msg[-2:] == '\n':
 		msg = msg[:-2]
 	
-	if (not db_given):
+	if not db_given:
 		print("Please provide the db file to operate on.")
-		ays.exit(3)
+		sys.exit(3)
 
 	conn = httplib.HTTPSConnection(server_address, server_port)
-	conn.request("POST", "/",db_file +'\n'+ msg)
+	conn.request("POST", "/", db_file + '\n' + msg)
 	
 	response = conn.getresponse()  # TODO Do something with response
 	print("Got response.")
