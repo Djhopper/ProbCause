@@ -23,18 +23,16 @@ DROP TABLE t;'''
     expected = json.dumps(
         [[], [], [], [{"y": 2, "x": 1, "name": "A"}, {"y": 4, "x": 3, "name": "B"}], []]
     )
-    # Run server
+
     server_thread = threading.Thread(target=server_thread_function, args=())
     server_thread.daemon = True
     server_thread.start()
-    time.sleep(1)
-    # Make request
+    time.sleep(0.5)  # XXX Bad way to ensure the server is definitely done setting up
+
     connection = httplib.HTTPConnection(ip, port)
     connection.request("POST", "/", queries)
     response = connection.getresponse().read()
 
-    print "Response: " + str(response)
-    print "Expected: " + str(expected)
     assert response == expected
 
 
@@ -43,18 +41,15 @@ def test_server_error():
         '''foo.bdb
 CREATE CHAOS'''
     expected = "Syntax error near [CHAOS] after [CREATE]"
-    # Run server
+
     server_thread = threading.Thread(target=server_thread_function, args=())
     server_thread.daemon = True
     server_thread.start()
-    time.sleep(1)
-    # Make request
+    time.sleep(0.5)  # XXX Bad way to ensure the server is definitely done setting up
+
     connection = httplib.HTTPConnection(ip, port)
     connection.request("POST", "/", queries)
+
     response = connection.getresponse().read()
+
     assert response == expected
-
-
-if __name__ == '__main__':
-    test_server()
-    test_server_error()
