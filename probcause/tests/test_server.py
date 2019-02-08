@@ -15,9 +15,9 @@ def server_thread():
 def test_server():
     queries = \
         '''foo.bdb
-        CREATE TABLE t(name TEXT, x INT, y INT);
-        INSERT INTO t VALUES("A", 1, 2);
-        INSERT INTO t VALUES("B", 3, 4);
+        SQL CREATE TABLE t (name TEXT, x INT, y INT);
+        SQL INSERT INTO t VALUES("A", 1, 2);
+        SQL INSERT INTO t VALUES("B", 3, 4);
         SELECT * FROM t;
         DROP TABLE t;
         '''
@@ -39,5 +39,23 @@ def test_server():
     assert response == expected
 
 
+def test_server_error():
+    queries = \
+        '''foo.bdb
+        CREATE CHAOS
+        '''
+    expected = "Syntax error near [CHAOS] after [CREATE]"
+    # Run server
+    th = threading.Thread(target=server_thread, args=())
+    th.daemon = True
+    th.start()
+    time.sleep(1)
+    # Make request
+    connection = httplib.HTTPConnection(ip, port)
+    connection.request("POST", "/", queries)
+    response = connection.getresponse()
+    assert response.read() == expected
+
 if __name__ == '__main__':
     test_server()
+    test_server_error()

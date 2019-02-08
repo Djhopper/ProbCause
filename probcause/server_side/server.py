@@ -12,7 +12,9 @@ Requests are 'text/http' and are in the following format:
     query2
     ...
     queryN
-Note that the queries should not contain new lines. 
+-Note that the queries should not contain new lines. 
+-Note that if query is valid SQL but not valid BQL, query must take form of:
+    SQL query1
 
 RESPONSES
 Responses are 'text/http' in the case that an error occurs:
@@ -65,7 +67,10 @@ class RequestHandler(BaseHTTPRequestHandler):
         with bayeslite.bayesdb_open(pathname=db_name) as bdb:
             for query in queries:
                 try:
-                    results.append(conv_cursor_to_json(bdb.execute(query)))
+                    if query[0:2].upper() != "SQL":
+                        results.append(conv_cursor_to_json(bdb.execute(query)))
+                    else:
+                        results.append(conv_cursor_to_json(bdb.sql_execute(query[4:])))
                 except (BQLError, BQLParseError, BayesDBException), e:
                     self.send_err(e)
                     return
