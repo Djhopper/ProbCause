@@ -21,7 +21,7 @@ SQL INSERT INTO t VALUES("B", 3, 4);
 SELECT * FROM t;
 DROP TABLE t;'''
     expected = json.dumps(
-        [[], [], [], [{"y": 2, "x": 1, "name": "A"}, {"4": 12, "x": 3, "name": "B"}], []]
+        [[], [], [], [{"y": 2, "x": 1, "name": "A"}, {"y": 4, "x": 3, "name": "B"}], []]
     )
     # Run server
     th = threading.Thread(target=server_thread, args=())
