@@ -34,7 +34,7 @@ def test_server():
     connection.request("POST", "/", queries)
     response = connection.getresponse()
 
-    print "Response: " + str(response.msg)
+    print "Response: " + str(response.read())
     print "Expected: " + str(expected)
     assert response == expected
 
