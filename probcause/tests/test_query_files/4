@@ -1,0 +1,10 @@
+*****
+SQL CREATE TABLE t 
+(name TEXT, x INT, y INT);
+*****
+SQL 
+INSERT 
+INTO 
+t 
+VALUES("A", 1, 2);
+******
