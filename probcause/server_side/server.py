@@ -68,7 +68,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             for query in queries:
                 try:
                     print query
-                    if query[0:2].upper() != "SQL":
+                    if query[0:3].upper() != "SQL":
                         results.append(conv_cursor_to_json(bdb.execute(query)))
                     else:
                         results.append(conv_cursor_to_json(bdb.sql_execute(query[4:])))
