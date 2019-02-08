@@ -3,9 +3,11 @@ import threading
 import httplib
 import json
 
+port = 8082
+
 
 def server_thread():
-    server.main('', 8082)
+    server.main('', port)
 
 
 def test_server():
@@ -25,8 +27,11 @@ def test_server():
     th.daemon = True
     th.start()
     # Make request
-    connection = httplib.HTTPConnection('', 443)
+    connection = httplib.HTTPConnection('', port)
     connection.request("POST", "/", queries)
     response = connection.getresponse()
     assert response == expected
 
+
+if __name__ == '__main__':
+    test_server()
