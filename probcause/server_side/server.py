@@ -48,6 +48,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.wfile.write(str(err))
 
     def do_POST(self):
+        print "POST time!"
         self.send_response(200)
 
         try:
