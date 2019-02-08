@@ -61,6 +61,6 @@ def run(server_address, server_port):
 
 
 if __name__ == "__main__":
-	server_address = ''
+	server_address = '128.232.98.213'
 	server_port = 443
 	run(server_address, server_port)
