@@ -35,7 +35,7 @@ DROP TABLE t;'''
 
     print "Response: " + str(response.read())
     print "Expected: " + str(expected)
-    assert response == expected
+    assert response.read() == expected
 
 
 def test_server_error():
