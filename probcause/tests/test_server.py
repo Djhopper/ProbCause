@@ -5,7 +5,7 @@ import json
 
 
 def server_thread():
-    server.main('', 443)
+    server.main('', 8082)
 
 
 def test_server():
