@@ -31,11 +31,11 @@ DROP TABLE t;'''
     # Make request
     connection = httplib.HTTPConnection(ip, port)
     connection.request("POST", "/", queries)
-    response = connection.getresponse()
+    response = connection.getresponse().read()
 
-    print "Response: " + str(response.read())
+    print "Response: " + str(response)
     print "Expected: " + str(expected)
-    assert str(response.read()) == str(expected)
+    assert response == expected
 
 
 def test_server_error():
@@ -52,8 +52,9 @@ def test_server_error():
     # Make request
     connection = httplib.HTTPConnection(ip, port)
     connection.request("POST", "/", queries)
-    response = connection.getresponse()
-    assert response.read() == expected
+    response = connection.getresponse().read()
+    assert response == expected
+
 
 if __name__ == '__main__':
     test_server()
