@@ -8,7 +8,7 @@ ip = '128.232.98.213'
 port = 8082
 
 
-def server_thread():
+def server_thread_function():
     server.main(ip, port)
 
 
@@ -24,9 +24,9 @@ DROP TABLE t;'''
         [[], [], [], [{"y": 2, "x": 1, "name": "A"}, {"y": 4, "x": 3, "name": "B"}], []]
     )
     # Run server
-    th = threading.Thread(target=server_thread, args=())
-    th.daemon = True
-    th.start()
+    server_thread = threading.Thread(target=server_thread_function, args=())
+    server_thread.daemon = True
+    server_thread.start()
     time.sleep(1)
     # Make request
     connection = httplib.HTTPConnection(ip, port)
@@ -41,13 +41,12 @@ DROP TABLE t;'''
 def test_server_error():
     queries = \
         '''foo.bdb
-        CREATE CHAOS
-        '''
+CREATE CHAOS'''
     expected = "Syntax error near [CHAOS] after [CREATE]"
     # Run server
-    th = threading.Thread(target=server_thread, args=())
-    th.daemon = True
-    th.start()
+    server_thread = threading.Thread(target=server_thread_function, args=())
+    server_thread.daemon = True
+    server_thread.start()
     time.sleep(1)
     # Make request
     connection = httplib.HTTPConnection(ip, port)

@@ -15,7 +15,7 @@ def test_conv_cursor_to_json():
         result = bdb.execute(
             "SELECT * FROM t")
         # Convert to json
-        result = conv_cursor_to_json(result)
+        result = conv_cursor_to_json(result, True)
         assert result == json.dumps([{"y": 11, "x": 1, "name": "A"}, {"y": 12, "x": 2, "name": "B"}, {"y": 13, "x": 3, "name": "C"}])
         # Clean up
         bdb.execute("DROP TABLE t")
