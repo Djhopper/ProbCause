@@ -1,37 +1,45 @@
 # send_request.py
-'''
-
-Given a file handle, as well as a client ID, sends contents of the 
-file (assumed valid BQL) to server side for processing through HTTP
-request.
-
-'''
 import httplib
 import sys
 import getopt
 
+"""
+Given a file handle, as well as a client ID, sends contents of the 
+file (assumed valid BQL) to server side for processing through HTTP
+request.
+"""
 
 query_delimiter = '*****'
 
-def queryfy(lines):
+
+def queryfy_old(lines):  # Deprecated TODO Remove this?
 	# find and separate queries, based on query delimiter.
-	qs = []
-	tmp = []
+	queries = []
+	query = []
 	for line in lines:
-		if( line == query_delimiter ):
-			qs.append(tmp.join(' '))
+		if line == query_delimiter:
+			queries.append(" ".join(query))
 		else:
-			tmp.append(line)
-	if(tmp != []):
-		qs.append(tmp.join(' '))
-	return qs
+			query.append(line)
+	if query != []:
+		queries.append(" ".join(query))
+	return queries
+
+
+def lines_to_queries(lines):
+	whole_file = " ".join(lines)
+	queries = [query.replace("\n", " ") for query in whole_file.split(query_delimiter)]
+	queries = [q for q in queries if q != '']  # Filter out empty queries
+	return queries
+
 
 def run(server_address, server_port):
+	# Process command line inputs
 	args_given = sys.argv[1:]
 
 	try:	
-		opts, args = getopt.getopts(args_given, ['file=', 'query='])
-	except getopt.GetOptError as err:
+		opts, args = getopt.getopt(args_given, ['file=', 'query='])
+	except getopt.GetoptError as err:
 		print(err)
 		sys.exit(1)
 	
@@ -40,22 +48,21 @@ def run(server_address, server_port):
 		print('Usage: send_request.py [--file=<FILE>] [--query=<QUERY>]. Please provide at least one of these options.')
 		sys.exit(2)
 	
-
-	for opt, val in opts:
-		if (opt == '--file'):
-			srcfile = val
-			f = open(srcfile, 'r')
-			lines = f.readlines()
-			queries = [q for q in queryfy(lines) if q != '']
-			msg = queries.join('\n')  # TODO Need .bdb name too
-		elif (opt == '--query'):
+	# Generate message for http request
+	for opt, val in opts:  # TODO Should this loop ever run more than once? If so, should it be overwriting msg each time?
+		if opt == '--file':
+			f = open(file=val, mode='r')
+			queries = lines_to_queries(f.readlines())
+			msg = "\n".join(queries)  # TODO Need .bdb name too
+		elif opt == '--query':
 			msg = val.replace('\n', ' ')
 
 	conn = httplib.HTTPSConnection(server_address, server_port)
 	conn.request("POST", "/", msg)
 	
-	response = conn.getresponse()
+	response = conn.getresponse()  # TODO Do something with response
 	print("Got response.")
+
 
 if __name__ == "__main__":
 	server_address = ''
