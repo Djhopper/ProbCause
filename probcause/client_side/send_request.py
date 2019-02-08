@@ -11,21 +11,6 @@ request.
 
 query_delimiter = '*****'
 
-
-def queryfy_old(lines):  # Deprecated TODO Remove this?
-	# find and separate queries, based on query delimiter.
-	queries = []
-	query = []
-	for line in lines:
-		if line == query_delimiter:
-			queries.append(" ".join(query))
-		else:
-			query.append(line)
-	if query != []:
-		queries.append(" ".join(query))
-	return queries
-
-
 def lines_to_queries(lines):
 	whole_file = " ".join(lines)
 	queries = [query.replace("\n", " ") for query in whole_file.split(query_delimiter)]
@@ -38,27 +23,37 @@ def run(server_address, server_port):
 	args_given = sys.argv[1:]
 
 	try:	
-		opts, args = getopt.getopt(args_given, ['file=', 'query='])
+		opts, args = getopt.getopt(args_given, '', ['db=', 'file=', 'query='])
 	except getopt.GetoptError as err:
 		print(err)
 		sys.exit(1)
 	
 	if len(opts) == 0:
 		print('Please provide either a file to read the query/queries from, or a string containing the query.')
-		print('Usage: send_request.py [--file=<FILE>] [--query=<QUERY>]. Please provide at least one of these options.')
+		print('Usage: send_request.py --db=<DB> [--file=<FILE>] [--query=<QUERY>]. Please provide at least one of the bracketed options.')
 		sys.exit(2)
-	
+	db_given=False
+	msg = ''
 	# Generate message for http request
-	for opt, val in opts:  # TODO Should this loop ever run more than once? If so, should it be overwriting msg each time?
+	for opt, val in opts:  
 		if opt == '--file':
 			f = open(file=val, mode='r')
 			queries = lines_to_queries(f.readlines())
-			msg = "\n".join(queries)  # TODO Need .bdb name too
+			msg += "\n".join(queries) + '\n'  
 		elif opt == '--query':
-			msg = val.replace('\n', ' ')
+			msg += val.replace('\n', ' ') + '\n'
+		elif opt == '--db'
+			db_given = True
+			db_file = val
+	if (msg[-2:] == '\n'):
+		msg = msg[:-2]
+	
+	if (not db_given):
+		print("Please provide the db file to operate on.")
+		ays.exit(3)
 
 	conn = httplib.HTTPSConnection(server_address, server_port)
-	conn.request("POST", "/", msg)
+	conn.request("POST", "/",db_file +'\n'+ msg)
 	
 	response = conn.getresponse()  # TODO Do something with response
 	print("Got response.")
