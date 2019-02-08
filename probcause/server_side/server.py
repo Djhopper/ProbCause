@@ -42,7 +42,7 @@ class RequestHandler(BaseHTTPRequestHandler):
 
     @staticmethod
     def results_to_json(results):
-        assert len(results > 0)
+        assert len(results) > 0
         return json.dumps(results)
 
     def send_err(self, err):
