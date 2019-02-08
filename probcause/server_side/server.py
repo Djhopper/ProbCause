@@ -42,39 +42,37 @@ class RequestHandler(BaseHTTPRequestHandler):
         assert len(results > 0)
         return json.dumps(results)
 
+    def send_err(self, err):
+        self.send_header('Content-type', 'text/http')
+        self.end_headers()
+        self.wfile.write(str(err))
+
     def do_POST(self):
         self.send_response(200)
-
-        err = False
 
         try:
             content_length = int(self.headers['Content-Length'])
             text = self.rfile.read(content_length).decode("utf8")
             db_name, queries = RequestHandler.text_to_queries(text)
         except UnicodeDecodeError:
-            err = "Error: Couldn't decode request, make sure it's utf8"
+            self.send_err("Error: Couldn't decode request, make sure it's utf8")
+            return
         except AssertionError:
-            err = "Error: You must give at least 1 query."
+            self.send_err("Error: You must give at least 1 query.")
+            return
 
-        if not err:
-            results = []
-            with bayeslite.bayesdb_open(pathname=db_name) as bdb:
-                for query in queries:
-                    try:
-                        results.append(conv_cursor_to_json(bdb.execute(query)))
-                    except (BQLError, BQLParseError, BayesDBException), e:
-                        err = e
-                        break
+        results = []
+        with bayeslite.bayesdb_open(pathname=db_name) as bdb:
+            for query in queries:
+                try:
+                    results.append(conv_cursor_to_json(bdb.execute(query)))
+                except (BQLError, BQLParseError, BayesDBException), e:
+                    self.send_err(e)
+                    return
 
-        if not err:
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
-            message = RequestHandler.results_to_json(results)
-        else:
-            self.send_header('Content-type', 'text/http')
-            self.end_headers()
-            message = str(err)
-
+        self.send_header('Content-type', 'application/json')
+        self.end_headers()
+        message = RequestHandler.results_to_json(results)
         self.wfile.write(message)
 
 
