@@ -24,20 +24,15 @@ def test_server():
         [[], [], [], [{"y": 2, "x": 1, "name": "A"}, {"4": 12, "x": 3, "name": "B"}], []]
     )
     # Run server
-    print 0
-    th = threading.Thread(target=server_thread())
+    th = threading.Thread(target=server_thread, args=())
     th.daemon = True
     th.start()
-    print 1
     # Make request
     connection = httplib.HTTPConnection(ip, port)
-    print 2
     connection.request("POST", "/", queries)
-    print 3
     response = connection.getresponse()
-    print 4
+
     assert response == expected
-    print 5
 
 
 if __name__ == '__main__':
