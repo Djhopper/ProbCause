@@ -2,6 +2,7 @@ import probcause.server_side.server as server
 import threading
 import httplib
 import json
+import time
 
 ip = '128.232.98.213'
 port = 8082
@@ -27,6 +28,7 @@ def test_server():
     th = threading.Thread(target=server_thread, args=())
     th.daemon = True
     th.start()
+    time.sleep(1)
     # Make request
     connection = httplib.HTTPConnection(ip, port)
     connection.request("POST", "/", queries)
