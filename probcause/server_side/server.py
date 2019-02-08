@@ -87,4 +87,6 @@ def main(ip, port):
 
 
 if __name__ == '__main__':
-    main('', 8080)
+    ip = '128.232.98.213'
+    port = 8080
+    main(ip, port)

@@ -3,11 +3,12 @@ import threading
 import httplib
 import json
 
+ip = '128.232.98.213'
 port = 8082
 
 
 def server_thread():
-    server.main('', port)
+    server.main(ip, port)
 
 
 def test_server():
