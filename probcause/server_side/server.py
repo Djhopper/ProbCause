@@ -37,6 +37,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         assert len(t) > 1
         db_name = t[0]
         queries = t[1:]
+        queries = [query for query in queries if query.strip(" ").strip("\n") != ""]  # Remove empty queries
         return db_name, queries
 
     @staticmethod

@@ -19,8 +19,7 @@ SQL CREATE TABLE t (name TEXT, x INT, y INT);
 SQL INSERT INTO t VALUES("A", 1, 2);
 SQL INSERT INTO t VALUES("B", 3, 4);
 SELECT * FROM t;
-DROP TABLE t;
-        '''
+DROP TABLE t;'''
     expected = json.dumps(
         [[], [], [], [{"y": 2, "x": 1, "name": "A"}, {"4": 12, "x": 3, "name": "B"}], []]
     )
