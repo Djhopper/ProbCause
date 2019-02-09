@@ -27,7 +27,7 @@ def lines_to_queries(lines):
 	return queries
 
 
-def run(msg, server_address='128.232.98.213', server_port=8082]):
+def run(msg, server_address='128.232.98.213', server_port=8082):
 
 	conn = httplib.HTTPSConnection(server_address, server_port)
 	conn.request("POST", "/", msg)
