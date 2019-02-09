@@ -28,8 +28,8 @@ def lines_to_queries(lines):
 
 
 def run(msg, server_address='128.232.98.213', server_port=8082):
-    conn = httplib.HTTPSConnection(server_address, server_port)
-    print "msg: " + msg  # TODO remove
+    conn = httplib.HTTPConnection(server_address, server_port)
+
     conn.request("POST", "/", msg)
 
     response = conn.getresponse()  # TODO Do something with response
