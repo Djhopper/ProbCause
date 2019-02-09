@@ -11,27 +11,29 @@ request.
 
 query_delimiter = '*****'
 
+
 class BadOptionsError(Exception):
 	def __init__(self, message, num):
-		# Call the base class constructor with the parameters it needs
 		super(BadOptionsError, self).__init__(message, num)
 		self.value = num
 		self.message = message
 
+
 def lines_to_queries(lines):
 	whole_file = " ".join(lines)
-	queries = [query.replace('  ', ' ').replace("\n", " ") for query in whole_file.split(query_delimiter)] #XXX bad way of getting rid of double spaces (couldn't figure out why it didn't work otherwise.)
+	# TODO Don't you want to strip the new lines, then strip the double spaces, not the other way around?
+	queries = [query.replace('  ', ' ').replace("\n", " ") for query in whole_file.split(query_delimiter)]  # XXX bad way of getting rid of double spaces (couldn't figure out why it didn't work otherwise.)
+	# TODO Does strip() do anything without any parameters?
 	queries = [q.strip().replace('  ', ' ') for q in queries if q.strip() != '']  # Filter out empty queries
 	return queries
 
 
 def run(server_address='128.232.98.213', server_port=8082, opts=[]):
-
 	db_given = False
 	msg = ''
 	for opt, val in opts:  
 		if opt == '--file':
-			f = open(name=val, mode='r')
+			f = open(file=val, mode='r')
 			queries = lines_to_queries(f.readlines())
 			msg += "\n".join(queries) + '\n'  
 		elif opt == '--query':
@@ -54,12 +56,14 @@ def run(server_address='128.232.98.213', server_port=8082, opts=[]):
 		raise BadOptionsError(msg, 2)
 
 	conn = httplib.HTTPSConnection(server_address, server_port)
-	conn.request("POST", "/", db_file + '''\n''' + msg)
+	conn.request("POST", "/", db_file + "\n" + msg)
 	
 	response = conn.getresponse()  # TODO Do something with response
 	print("Got response.")
 
+
 def main():
+	# TODO Are these variables meant to be used somewhere?
 	server_address = '128.232.98.213'
 	server_port = 8082
 	
@@ -67,10 +71,11 @@ def main():
 
 	try:	
 		opts, args = getopt.getopt(args_given, '', ['db=', 'file=', 'query=', 'server='])
-	except getopt.GetoptError as err:
+	except getopt.GetoptError:
 		raise BadOptionsError('Bad options given.', 1)
 
 	run(opts=opts)
+
 
 if __name__ == "__main__":
 	main()
