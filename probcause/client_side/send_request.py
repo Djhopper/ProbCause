@@ -21,9 +21,8 @@ class BadOptionsError(Exception):
 
 def lines_to_queries(lines):
 	whole_file = " ".join(lines)
-	# TODO Don't you want to strip the new lines, then strip the double spaces, not the other way around?
-	queries = [query.replace('  ', ' ').replace("\n", " ") for query in whole_file.split(query_delimiter)]  # XXX bad way of getting rid of double spaces (couldn't figure out why it didn't work otherwise.)
-	# TODO Does strip() do anything without any parameters?
+	queries = [query.replace("\n", " ").replace('  ', ' ') for query in whole_file.split(query_delimiter)]  # XXX bad way of getting rid of double spaces (couldn't figure out why it didn't work otherwise.)
+	# strip() without arguments strips leading/trailing whitespace from a string.
 	queries = [q.strip().replace('  ', ' ') for q in queries if q.strip() != '']  # Filter out empty queries
 	return queries
 
@@ -63,9 +62,6 @@ def run(server_address='128.232.98.213', server_port=8082, opts=[]):
 
 
 def main():
-	# TODO Are these variables meant to be used somewhere?
-	server_address = '128.232.98.213'
-	server_port = 8082
 	
 	args_given = sys.argv[1:]
 
