@@ -33,7 +33,7 @@ def run(server_address='128.232.98.213', server_port=8082, opts=[]):
 	msg = ''
 	for opt, val in opts:  
 		if opt == '--file':
-			f = open(file=val, mode='r')
+			f = open(name=val, mode='r')
 			queries = lines_to_queries(f.readlines())
 			msg += "\n".join(queries) + '\n'  
 		elif opt == '--query':
