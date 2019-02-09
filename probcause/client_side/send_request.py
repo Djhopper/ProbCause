@@ -11,34 +11,27 @@ request.
 
 query_delimiter = '*****'
 
+class BadOptionsError(Exception):
+	def __init__(self, message, num):
+		# Call the base class constructor with the parameters it needs
+		super(BadOptionsError, self).__init__(message, num)
+		self.value = num
+		self.message = message
 
 def lines_to_queries(lines):
 	whole_file = " ".join(lines)
-	queries = [query.replace("\n", " ") for query in whole_file.split(query_delimiter)]
-	queries = [q for q in queries if q != '']  # Filter out empty queries
+	queries = [query.replace('  ', ' ').replace("\n", " ") for query in whole_file.split(query_delimiter)] #XXX bad way of getting rid of double spaces (couldn't figure out why it didn't work otherwise.)
+	queries = [q.strip().replace('  ', ' ') for q in queries if q.strip() != '']  # Filter out empty queries
 	return queries
 
 
-def run(server_address, server_port):
-	# Process command line inputs
-	args_given = sys.argv[1:]
-
-	try:	
-		opts, args = getopt.getopt(args_given, '', ['db=', 'file=', 'query='])
-	except getopt.GetoptError as err:
-		print(err)
-		sys.exit(1)
-	
-	if len(opts) == 0:
-		print('Please provide either a file to read the query/queries from, or a string containing the query.')
-		print('Usage: send_request.py --db=<DB> [--file=<FILE>] [--query=<QUERY>]. Please provide at least one of the bracketed options.')
-		sys.exit(2)
+def run(server_address='128.232.98.213', server_port=8082, opts=[]):
 
 	db_given = False
 	msg = ''
 	for opt, val in opts:  
 		if opt == '--file':
-			f = open(file=val, mode='r')
+			f = open(name=val, mode='r')
 			queries = lines_to_queries(f.readlines())
 			msg += "\n".join(queries) + '\n'  
 		elif opt == '--query':
@@ -46,21 +39,38 @@ def run(server_address, server_port):
 		elif opt == '--db':
 			db_given = True
 			db_file = val
+		elif opt == '--server':
+			(server_address, server_port) = val.split(':')
+	
 	if msg[-2:] == '\n':
 		msg = msg[:-2]
 	
 	if not db_given:
-		print("Please provide the db file to operate on.")
-		sys.exit(3)
+		msg = "Please provide the db file to operate on."
+		raise BadOptionsError(msg, 3)
+
+	if msg == '':
+		msg = 'Please provide either a file to read the query/queries from, or a string containing the query. Usage: send_request.py --db=<DB> [--file=<FILE>] [--query=<QUERY>]. Please provide at least one of the bracketed options.' 
+		raise BadOptionsError(msg, 2)
 
 	conn = httplib.HTTPSConnection(server_address, server_port)
-	conn.request("POST", "/", db_file + '\n' + msg)
+	conn.request("POST", "/", db_file + '''\n''' + msg)
 	
 	response = conn.getresponse()  # TODO Do something with response
 	print("Got response.")
 
+def main():
+	server_address = '128.232.98.213'
+	server_port = 8082
+	
+	args_given = sys.argv[1:]
+
+	try:	
+		opts, args = getopt.getopt(args_given, '', ['db=', 'file=', 'query=', 'server='])
+	except getopt.GetoptError as err:
+		raise BadOptionsError('Bad options given.', 1)
+
+	run(opts=opts)
 
 if __name__ == "__main__":
-	server_address = '128.232.98.213'
-	server_port = 443
-	run(server_address, server_port)
+	main()
