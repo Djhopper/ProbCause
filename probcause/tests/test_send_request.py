@@ -98,29 +98,18 @@ def test_no_error_query_given():
     server_thread.daemon = True
     server_thread.start()
     time.sleep(0.5)  # XXX Bad way to ensure the server is definitely done setting up
-    
-    success = True
-    sys.argv = ['send_request.py', '--db=foo.db', '--query=\'DROP TABLE t;\'']
-    try:
-        send_request.main()
-    except Exception:  # TODO Better to specify which exception you expect - want your program to fail in the correct way / for the correct reason
-        success = False
 
-    assert success
+    sys.argv = ['send_request.py', '--db=foo.db', '--query=\'DROP TABLE t;\'']
+
+    send_request.main()
 
 
 def test_no_error_file_given():
-    '''
     server_thread = threading.Thread(target=server_thread_function, args=())
     server_thread.daemon = True
     server_thread.start()
-    time.sleep(0.5)  # XXX Bad way to ensure the server is definitely done setting up
-    '''
-    success = True
-    sys.argv = ['send_request.py', '--db=foo.db', '--file=../tests/test_queries/1']
-    try:
-        send_request.main()
-    except Exception:  # TODO Exception type too broad
-        success = False
 
-    assert success 
+    time.sleep(0.5)  # XXX Bad way to ensure the server is definitely done setting up
+    sys.argv = ['send_request.py', '--db=foo.db', '--file=../tests/test_queries/1']
+
+    send_request.main()
