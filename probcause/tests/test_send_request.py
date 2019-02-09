@@ -1,11 +1,8 @@
 import probcause.server_side.server as server
 import probcause.client_side.send_request as send_request
 import threading
-import httplib
-import json
 import time
 import os
-import subprocess
 import pytest
 import sys
 
@@ -27,29 +24,6 @@ def server_thread_function():
     server.main(ip, port)
 
 
-# TODO Read and then destroy this function
-def dan_being_a_dick():
-    import pytest
-    with pytest.raises(SystemExit) as e:  # Syntax for catching errors
-        pass
-    assert e.type == SystemExit
-    assert e.value.code == 5
-
-    # In python, raising errors/exceptions is generally preferred to sys.exit() as errors/exceptions are less opaque
-    # Also, normally your "run" function in send_request would take the form:
-    #       def run(server_address, server_port, database_handle, queries=None, file=None):
-    # This is so that argv ugliness doesn't get into the body of your code where it can be avoided.
-    # (You put the argv stuff in the 'if __name__ == "__main__":' bit)
-
-    # That said, who gives a f**k? Why am I being so extra?
-    # Nobody knows...
-    # It doesn't matter at all...
-    # Yikes I'm a python-head how gross
-    # - Dan
-
-    # PS: These tests look fine.
-
-
 def test_lines_to_queries():
     test_files = ['test_query_files/' + f for f in os.listdir('test_query_files')]
     output_files = ['test_queries/' + f for f in os.listdir('test_queries')]
@@ -67,7 +41,7 @@ def test_no_arguments():
     time.sleep(0.5)  # XXX Bad way to ensure the server is definitely done setting up
     sys.argv = ['send_request.py']
     with pytest.raises(send_request.BadOptionsError) as e:
-    	send_request.main()
+        send_request.main()
         
     response = (e.value.value, e.value.message)
     expected = (3, 'Please provide the db file to operate on.')
@@ -129,7 +103,7 @@ def test_no_error_query_given():
     sys.argv = ['send_request.py', '--db=foo.db', '--query=\'DROP TABLE t;\'']
     try:
         send_request.main()
-    except Exception as e:
+    except Exception:  # TODO Better to specify which exception you expect - want your program to fail in the correct way / for the correct reason
         success = False
 
     assert success
@@ -146,7 +120,7 @@ def test_no_error_file_given():
     sys.argv = ['send_request.py', '--db=foo.db', '--file=../tests/test_queries/1']
     try:
         send_request.main()
-    except Exception as e:
+    except Exception:  # TODO Exception type too broad
         success = False
 
     assert success 
