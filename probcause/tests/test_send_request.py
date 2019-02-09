@@ -108,8 +108,8 @@ def test_no_error_file_given():
     server_thread = threading.Thread(target=server_thread_function, args=())
     server_thread.daemon = True
     server_thread.start()
-
     time.sleep(0.5)  # XXX Bad way to ensure the server is definitely done setting up
+
     sys.argv = ['send_request.py', '--db=foo.db', '--file=../tests/test_queries/1']
 
     send_request.main()
