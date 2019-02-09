@@ -27,7 +27,25 @@ def lines_to_queries(lines):
 	return queries
 
 
-def run(server_address='128.232.98.213', server_port=8082, opts=[]):
+def run(msg, server_address='128.232.98.213', server_port=8082]):
+
+	conn = httplib.HTTPSConnection(server_address, server_port)
+	conn.request("POST", "/", msg)
+	
+	response = conn.getresponse()  # TODO Do something with response
+	print("Got response.")
+
+
+def main():
+	server_address = '128.232.98.213'
+	server_port = 8082
+	args_given = sys.argv[1:]
+
+	try:	
+		opts, args = getopt.getopt(args_given, '', ['db=', 'file=', 'query=', 'server='])
+	except getopt.GetoptError:
+		raise BadOptionsError('Bad options given.', 1)
+
 	db_given = False
 	msg = ''
 	for opt, val in opts:  
@@ -53,24 +71,8 @@ def run(server_address='128.232.98.213', server_port=8082, opts=[]):
 	if msg == '':
 		msg = 'Please provide either a file to read the query/queries from, or a string containing the query. Usage: send_request.py --db=<DB> [--file=<FILE>] [--query=<QUERY>]. Please provide at least one of the bracketed options.' 
 		raise BadOptionsError(msg, 2)
-
-	conn = httplib.HTTPSConnection(server_address, server_port)
-	conn.request("POST", "/", db_file + "\n" + msg)
-	
-	response = conn.getresponse()  # TODO Do something with response
-	print("Got response.")
-
-
-def main():
-	
-	args_given = sys.argv[1:]
-
-	try:	
-		opts, args = getopt.getopt(args_given, '', ['db=', 'file=', 'query=', 'server='])
-	except getopt.GetoptError:
-		raise BadOptionsError('Bad options given.', 1)
-
-	run(opts=opts)
+	msg = db_file + '''\n''' + msg
+	run(msg, server_address=server_address, server_port=server_port)
 
 
 if __name__ == "__main__":
