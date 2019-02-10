@@ -36,10 +36,9 @@ def run(msg, server_address='128.232.98.213', server_port=8082):
     print("Got response.")
 
 
-def main():
+def main(args_given=sys.argv[1:]):
     server_address = '128.232.98.213'
     server_port = 8082
-    args_given = sys.argv[1:]
 
     try:
         opts, args = getopt.getopt(args_given, '', ['db=', 'file=', 'query=', 'server='])
