@@ -29,4 +29,4 @@ with bayeslite.bayesdb_open(pathname=db_handle) as bdb:
             "INITIALIZE 1 MODEL FOR g")
         print "Training model..."
         bdb.execute(
-            "ANALYZE g FOR 1 MINUTES")
+            "ANALYZE g FOR 60 SECONDS")
