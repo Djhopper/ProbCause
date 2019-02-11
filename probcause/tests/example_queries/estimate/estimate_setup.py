@@ -16,7 +16,7 @@ with bayeslite.bayesdb_open(pathname=db_handle) as bdb:
             "(" + \
             "; ".join("ignore "+i for i in ignore) + "; " + \
             "; ".join(i + " numerical " for i in numerical) + "; " + \
-            "; ".join(i + "nominal" for i in nominal) + \
+            "; ".join(i + " nominal" for i in nominal) + \
             ")"
         print "Schema:\n" + schema
         bdb.execute(
