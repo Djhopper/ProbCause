@@ -14,8 +14,8 @@ with bayeslite.bayesdb_open(pathname=db_handle) as bdb:
         nominal = ["SubmittedAfterTheDeadline", "EmployerSize"]
         schema = \
             "(" + \
-            "; ".join("ignore "+i for i in ignore) + \
-            "; ".join(i + " numerical " for i in numerical) + \
+            "; ".join("ignore "+i for i in ignore) + "; " + \
+            "; ".join(i + " numerical " for i in numerical) + "; " + \
             "; ".join(i + "nominal" for i in nominal) + \
             ")"
         print "Schema:\n" + schema
