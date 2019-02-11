@@ -18,7 +18,7 @@ with bayeslite.bayesdb_open(pathname=db_handle) as bdb:
             "; ".join(i + " numerical " for i in numerical) + \
             "; ".join(i + "nominal" for i in nominal) + \
             ")"
-
+        print "Schema:\n" + schema
         bdb.execute(
             "CREATE POPULATION FOR " + table_name + " " + schema)
         bdb.execute(
