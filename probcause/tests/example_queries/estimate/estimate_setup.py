@@ -18,12 +18,15 @@ with bayeslite.bayesdb_open(pathname=db_handle) as bdb:
             "; ".join(i + " numerical " for i in numerical) + "; " + \
             "; ".join(i + " nominal" for i in nominal) + \
             ")"
-
+        print "Creating population..."
         bdb.execute(
             "CREATE POPULATION FOR " + table_name + " " + schema)
+        print "Creating generator..."
         bdb.execute(
             "CREATE GENERATOR g FOR " + table_name)
+        print "Initialising model..."
         bdb.execute(
             "INITIALIZE 1 MODEL FOR g")
+        print "Training model..."
         bdb.execute(
             "ANALYZE g FOR 1 MINUTES")
