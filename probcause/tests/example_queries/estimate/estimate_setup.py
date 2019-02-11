@@ -18,7 +18,7 @@ with bayeslite.bayesdb_open(pathname=db_handle) as bdb:
             "; ".join(i + " numerical " for i in numerical) + "; " + \
             "; ".join(i + " nominal" for i in nominal) + \
             ")"
-        print "Schema:\n" + schema
+
         bdb.execute(
             "CREATE POPULATION FOR " + table_name + " " + schema)
         bdb.execute(
@@ -26,4 +26,4 @@ with bayeslite.bayesdb_open(pathname=db_handle) as bdb:
         bdb.execute(
             "INITIALIZE 1 MODEL FOR g")
         bdb.execute(
-            "ANALYZE g FOR 30 MINUTES")
+            "ANALYZE g FOR 1 MINUTES")
