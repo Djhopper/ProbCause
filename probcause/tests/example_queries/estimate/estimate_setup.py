@@ -9,8 +9,9 @@ with bayeslite.bayesdb_open(pathname=db_handle) as bdb:
     with open(csv_handle, 'r') as f:
         table_from_csv(bdb, table_name, f)
 
-        ignore = ["EmployerName", "Address", "Postcode", "CompanyLinkToGPGInfo", "ResponsiblePerson", "CurrentName"]
-        numerical = ["PercentDifferenceinMeanHourlyWage", "PercentDifferenceinMedianHourlyWage", "PercentDifferenceinMeanBonusReceived", "PercentDifferenceinMedianBonusReceived", "PercentageofMalesthatReceivedaBonus", "PercentageofFemalesthatReceivedaBonus", "ProportionofMalesinLowerQuartile", "ProportionofFemalesinLowerQuartile", "ProportionofMalesinLowerMiddleQuartile", "ProportionofFemalesinLowerMiddleQuartile", "ProportionofMalesinUpperMiddleQuartile", "ProportionofFemalesinUpperMiddleQuartile", "ProportionofMalesinTopQuartile", "ProportionofFemalesinTopQuartile"]
+        ignore = ["EmployerName", "Address", "Postcode", "CompanyLinkToGPGInfo", "ResponsiblePerson", "CurrentName",
+                  "PercentDifferenceinMedianHourlyWage", "PercentDifferenceinMeanBonusReceived", "PercentDifferenceinMedianBonusReceived", "PercentageofMalesthatReceivedaBonus", "PercentageofFemalesthatReceivedaBonus"]
+        numerical = ["PercentDifferenceinMeanHourlyWage", "ProportionofMalesinLowerQuartile", "ProportionofFemalesinLowerQuartile", "ProportionofMalesinLowerMiddleQuartile", "ProportionofFemalesinLowerMiddleQuartile", "ProportionofMalesinUpperMiddleQuartile", "ProportionofFemalesinUpperMiddleQuartile", "ProportionofMalesinTopQuartile", "ProportionofFemalesinTopQuartile"]
         nominal = ["SubmittedAfterTheDeadline", "EmployerSize"]
         schema = \
             "(" + \
