@@ -36,8 +36,8 @@ def run(msg, server_address='128.232.98.213', server_port=8082):
     print("Got response.")
 
 
-def main(args_given=['~~~~~~~~~~']):
-    args_given = sys.argv[1:] if args_given == ['~~~~~~~~~~'] else args_given
+def main(args_given=None):
+    args_given = sys.argv[1:] if args_given ==None  else args_given
     server_address = '128.232.98.213'
     server_port = 8082
 
