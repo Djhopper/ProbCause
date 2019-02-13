@@ -67,15 +67,20 @@ class RequestHandler(BaseHTTPRequestHandler):
         results = []
         with bayeslite.bayesdb_open(pathname=db_name) as bdb:
             for query in queries:
+                print "doing a query..."
                 try:
                     if query[0:3].upper() != "SQL":
-                        results.append(conv_cursor_to_json(bdb.execute(query)))
+                        res = conv_cursor_to_json(bdb.execute(query))
+                        results.append(res)
+                        print "Query1: " + query
+                        print "Result1: " + res
                     else:
                         res = conv_cursor_to_json(bdb.sql_execute(query[4:]))
                         results.append(res)
-                        print "Query: " + query
-                        print "Result: " + res
+                        print "Query2: " + query
+                        print "Result2: " + res
                 except (BQLError, BQLParseError, BayesDBException), e:
+                    print "ERROR D:"
                     self.send_err(e)
                     return
 
