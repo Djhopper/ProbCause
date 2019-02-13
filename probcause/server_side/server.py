@@ -46,7 +46,6 @@ class RequestHandler(BaseHTTPRequestHandler):
         return json.dumps(results)
 
     def send_err(self, err):
-        print str(err)
         self.send_header('Content-type', 'text/http')
         self.end_headers()
         self.wfile.write(str(err))
@@ -68,20 +67,12 @@ class RequestHandler(BaseHTTPRequestHandler):
         results = []
         with bayeslite.bayesdb_open(pathname=db_name) as bdb:
             for query in queries:
-                print "doing a query..."
                 try:
                     if query[0:3].upper() != "SQL":
-                        res = conv_cursor_to_json(bdb.execute(query))
-                        results.append(res)
-                        print "Query1: " + query
-                        print "Result1: " + str(res)
+                        results.append(conv_cursor_to_json(bdb.execute(query)))
                     else:
-                        res = conv_cursor_to_json(bdb.sql_execute(query[4:]))
-                        results.append(res)
-                        print "Query2: " + query
-                        print "Result2: " + str(res)
+                        results.append(conv_cursor_to_json(bdb.sql_execute(query[4:])))
                 except (BQLError, BQLParseError, BayesDBException), e:
-                    print "ERROR D:"
                     self.send_err(e)
                     return
 
