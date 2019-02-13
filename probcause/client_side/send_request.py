@@ -37,7 +37,8 @@ def run(msg, server_address='128.232.98.213', server_port=8082):
 
 
 def main(args_given=None):
-    args_given = sys.argv[1:] if args_given is None else args_given
+    if args_given is None:
+        args_given = sys.argv[1:]
     server_address = '128.232.98.213'
     server_port = 8082
 
