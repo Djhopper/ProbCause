@@ -82,7 +82,7 @@ class RequestHandler(BaseHTTPRequestHandler):
                 except (BQLError, BQLParseError, BayesDBException), e:
                     print "ERROR D:"
                     self.send_err(e)
-                    return
+                    return 12345
 
         self.send_header('Content-type', 'application/json')
         self.end_headers()
