@@ -1,0 +1,38 @@
+ESTIMATE PercentDifferenceinMeanHourlyWage
+BY GenderPayGap
+LIMIT 20;
+*****
+ESTIMATE PercentDifferenceinMeanHourlyWage
+FROM GenderPayGap
+WHERE EmployerSize="250 to 499"
+LIMIT 20;
+*****
+ESTIMATE PercentDifferenceinMeanHourlyWage
+FROM GenderPayGap
+WHERE "ProportionofFemalesinLowerQuartile" < 0.25
+LIMIT 20;
+*****
+ESTIMATE PercentDifferenceinMeanHourlyWage
+FROM GenderPayGap
+WHERE "ProportionofFemalesinLowerQuartile" < 0.25
+GROUP BY EmployerSize
+LIMIT 20;
+*****
+ESTIMATE PercentDifferenceinMeanHourlyWage
+FROM GenderPayGap
+WHERE "ProportionofFemalesinLowerQuartile" < 0.25
+GROUP BY EmployerSize
+LIMIT 20;
+*****
+ESTIMATE PercentDifferenceinMeanHourlyWage
+FROM GenderPayGap
+WHERE "ProportionofFemalesinLowerQuartile" < 0.25
+ORDER BY PercentDifferenceinMeanHourlyWage
+LIMIT 20;
+*****
+ESTIMATE PercentDifferenceinMeanHourlyWage
+FROM GenderPayGap
+WHERE "ProportionofFemalesinLowerQuartile" < 0.25
+GROUP BY EmployerSize
+ORDER BY PercentDifferenceinMeanHourlyWage
+LIMIT 20;

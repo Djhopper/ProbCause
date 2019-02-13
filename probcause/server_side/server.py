@@ -8,13 +8,13 @@ import json
 REQUESTS
 Requests are 'text/http' and are in the following format:
     database_name.bdb
-    query1
+    query
     query2
     ...
     queryN
 -Note that the queries should not contain new lines. 
 -Note that if query is valid SQL but not valid BQL, query must take form of:
-    SQL query1
+    SQL query
 
 RESPONSES
 Responses are 'text/http' in the case that an error occurs:

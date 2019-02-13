@@ -32,5 +32,6 @@ def main():
         bdb.execute(
             "INITIALIZE 1 MODEL FOR g")
 
+
 if __name__ == "__main__":
     main()
