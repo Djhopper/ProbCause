@@ -32,8 +32,9 @@ def run(msg, server_address='128.232.98.213', server_port=8082):
 
     conn.request("POST", "/", msg)
 
-    response = conn.getresponse()  # TODO Do something with response
+    response = conn.getresponse()
     print("Got response.")
+    return response
 
 
 def main(args_given=None):
@@ -72,6 +73,7 @@ def main(args_given=None):
     if msg == '':
         msg = 'Please provide either a file to read the query/queries from, or a string containing the query. Usage: send_request.py --db=<DB> [--file=<FILE>] [--query=<QUERY>]. Please provide at least one of the bracketed options.'
         raise BadOptionsError(msg, 2)
+
     msg = db_file + '''\n''' + msg
     run(msg, server_address=server_address, server_port=server_port)
 

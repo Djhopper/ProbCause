@@ -20,7 +20,8 @@ def main():
     time.sleep(0.5)  # XXX Bad way to ensure the server is definitely done setting up
 
     args = ['--db=GenderPayGap.bdb', '--file=queries/query']
-    send_request.main(args)
+    results = send_request.main(args)
+    print results
 
 
 if __name__ == "__main__":
