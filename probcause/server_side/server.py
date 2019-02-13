@@ -57,7 +57,6 @@ class RequestHandler(BaseHTTPRequestHandler):
             content_length = int(self.headers['Content-Length'])
             text = self.rfile.read(content_length).decode("utf8")
             db_name, queries = RequestHandler.text_to_queries(text)
-            print queries
         except UnicodeDecodeError:
             self.send_err("Error: Couldn't decode request, make sure it's utf8")
             return
@@ -72,7 +71,10 @@ class RequestHandler(BaseHTTPRequestHandler):
                     if query[0:3].upper() != "SQL":
                         results.append(conv_cursor_to_json(bdb.execute(query)))
                     else:
-                        results.append(conv_cursor_to_json(bdb.sql_execute(query[4:])))
+                        res = conv_cursor_to_json(bdb.sql_execute(query[4:]))
+                        results.append(res)
+                        print "Query: " + query
+                        print "Result: " + res
                 except (BQLError, BQLParseError, BayesDBException), e:
                     self.send_err(e)
                     return
