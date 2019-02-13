@@ -85,7 +85,7 @@ def test_no_query():
     server_thread.start()
     time.sleep(0.5)  # XXX Bad way to ensure the server is definitely done setting up
     expected = (2, 'Please provide either a file to read the query/queries from, or a string containing the query. Usage: send_request.py --db=<DB> [--file=<FILE>] [--query=<QUERY>]. Please provide at least one of the bracketed options.') 
-    sys.argv = ['send_request.py', '--db=foo.bdb']
+    sys.argv = ['send_request.py', '--db=foo2.bdb']
     with pytest.raises(send_request.BadOptionsError) as e:
         send_request.main()
     
@@ -100,7 +100,7 @@ def test_no_error_query_given():
     server_thread.start()
     time.sleep(0.5)  # XXX Bad way to ensure the server is definitely done setting up
 
-    sys.argv = ['send_request.py', '--db=foo.bdb', '--query=\'DROP TABLE t;\'']
+    sys.argv = ['send_request.py', '--db=foo2.bdb', '--query=\'DROP TABLE t;\'']
 
     send_request.main()
 
@@ -111,6 +111,6 @@ def test_no_error_file_given():
     server_thread.start()
     time.sleep(0.5)  # XXX Bad way to ensure the server is definitely done setting up
 
-    sys.argv = ['send_request.py', '--db=foo.bdb', '--file=../tests/test_queries/1']
+    sys.argv = ['send_request.py', '--db=foo2.bdb', '--file=../tests/test_queries/1']
 
     send_request.main()
