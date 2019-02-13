@@ -75,7 +75,7 @@ def main(args_given=None):
         raise BadOptionsError(msg, 2)
 
     msg = db_file + '''\n''' + msg
-    run(msg, server_address=server_address, server_port=server_port)
+    return run(msg, server_address=server_address, server_port=server_port)
 
 
 if __name__ == "__main__":
