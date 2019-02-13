@@ -19,8 +19,7 @@ def main():
     server_thread.start()
     time.sleep(0.5)  # XXX Bad way to ensure the server is definitely done setting up
 
-    args = ['send_request.py', '--file=queries/query',
-            '--db=GenderPayGap.bdb']
+    args = ['send_request.py', '--db=GenderPayGap.bdb', '--file=queries/query']
     send_request.main(args)
 
 
