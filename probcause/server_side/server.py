@@ -46,6 +46,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         return json.dumps(results)
 
     def send_err(self, err):
+        print str(err)
         self.send_header('Content-type', 'text/http')
         self.end_headers()
         self.wfile.write(str(err))
