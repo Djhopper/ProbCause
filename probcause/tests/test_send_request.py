@@ -31,7 +31,7 @@ def test_lines_to_queries():
         print('Checking queryfication of ' + f)
         lines = open(name=f, mode='r').readlines()
         queries = send_request.lines_to_queries(lines)
-	print(queries)
+        print(queries)
         assert queries == [s.replace('\n', '') for s in open(name=output_files[i], mode='r').readlines()]
 
 

@@ -74,12 +74,12 @@ class RequestHandler(BaseHTTPRequestHandler):
                         res = conv_cursor_to_json(bdb.execute(query))
                         results.append(res)
                         print "Query1: " + query
-                        print "Result1: " + res
+                        print "Result1: " + str(res)
                     else:
                         res = conv_cursor_to_json(bdb.sql_execute(query[4:]))
                         results.append(res)
                         print "Query2: " + query
-                        print "Result2: " + res
+                        print "Result2: " + str(res)
                 except (BQLError, BQLParseError, BayesDBException), e:
                     print "ERROR D:"
                     self.send_err(e)
