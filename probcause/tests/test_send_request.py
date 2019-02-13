@@ -100,7 +100,7 @@ def test_no_error_query_given():
     server_thread.start()
     time.sleep(0.5)  # XXX Bad way to ensure the server is definitely done setting up
 
-    sys.argv = ['send_request.py', '--db=foo.db', '--query=\'DROP TABLE t;\'']
+    sys.argv = ['send_request.py', '--db=foo.bdb', '--query=\'DROP TABLE t;\'']
 
     send_request.main()
 
@@ -111,6 +111,6 @@ def test_no_error_file_given():
     server_thread.start()
     time.sleep(0.5)  # XXX Bad way to ensure the server is definitely done setting up
 
-    sys.argv = ['send_request.py', '--db=foo.db', '--file=../tests/test_queries/1']
+    sys.argv = ['send_request.py', '--db=foo.bdb', '--file=../tests/test_queries/1']
 
     send_request.main()
