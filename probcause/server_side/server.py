@@ -57,6 +57,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             content_length = int(self.headers['Content-Length'])
             text = self.rfile.read(content_length).decode("utf8")
             db_name, queries = RequestHandler.text_to_queries(text)
+            print queries
         except UnicodeDecodeError:
             self.send_err("Error: Couldn't decode request, make sure it's utf8")
             return
