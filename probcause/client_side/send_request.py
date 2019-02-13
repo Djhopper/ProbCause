@@ -33,13 +33,13 @@ def run(msg, server_address='128.232.98.213', server_port=8082):
     conn.request("POST", "/", msg)
 
     response = conn.getresponse()
-    print("Got response.")
     return response
 
 
 def main(args_given=None):
     if args_given is None:
         args_given = sys.argv[1:]
+    print "args given: " + args_given
     server_address = '128.232.98.213'
     server_port = 8082
 

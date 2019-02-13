@@ -21,7 +21,7 @@ def main():
 
     args = ['--db=GenderPayGap.bdb', '--file=queries/query']
     results = send_request.main(args)
-    print results
+    print "Results: " + results
 
 
 if __name__ == "__main__":
