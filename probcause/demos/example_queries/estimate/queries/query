@@ -38,3 +38,5 @@ FROM
     WHERE "ProportionofFemalesinLowerQuartile" < 0.1
     LIMIT 500)
 GROUP BY EmployerSize;
+*****
+SELECT * FROM GenderPayGap WHERE Postcode = "DT11 0PX";
