@@ -37,4 +37,4 @@ FROM
     FROM GenderPayGap
     WHERE "ProportionofFemalesinLowerQuartile" < 0.25
     GROUP BY EmployerSize
-    LIMIT 500;);
+    LIMIT 500);
