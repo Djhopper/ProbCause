@@ -1,5 +1,5 @@
 ESTIMATE PercentDifferenceinMeanHourlyWage
-BY GenderPayGap
+FROM GenderPayGap
 LIMIT 10;
 *****
 ESTIMATE PercentDifferenceinMeanHourlyWage
