@@ -39,4 +39,4 @@ FROM
     LIMIT 500)
 GROUP BY EmployerSize;
 *****
-SELECT * FROM GenderPayGap WHERE Postcode = "DT11 0PX";
+SELECT * FROM GenderPayGap WHERE EmployerName = "123 EMPLOYEES LTD";

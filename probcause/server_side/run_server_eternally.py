@@ -7,7 +7,7 @@ while True:
 		time.sleep(10)
 		server.main('localhost', 8080)
 	except socket.error as e:
-		if e.errno==98:
+		if e.errno == 98:
 			pass
 		else:
 			print(e)
