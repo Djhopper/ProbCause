@@ -39,4 +39,4 @@ FROM
     LIMIT 500)
 GROUP BY EmployerSize;
 *****
-SELECT * FROM GenderPayGap WHERE EmployerName = "123 EMPLOYEES LTD";
+SELECT * FROM GenderPayGap WHERE EmployerName = "RED BAND CHEMICAL COMPANY, LIMITED";
