@@ -31,7 +31,7 @@ GROUP BY EmployerSize
 ORDER BY PercentDifferenceinMeanHourlyWage DESC
 LIMIT 3;
 *****
-SELECT EmployerSize, AVG(PercentDifferenceinMeanHourlyWage)
+SELECT EmployerSize, AVG(PercentDifferenceinMeanHourlyWage) as "avg"
 FROM
     (ESTIMATE EmployerSize, PercentDifferenceinMeanHourlyWage
     FROM GenderPayGap
