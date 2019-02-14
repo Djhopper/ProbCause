@@ -9,16 +9,10 @@ LIMIT 3;
 *****
 ESTIMATE PercentDifferenceinMeanHourlyWage
 FROM GenderPayGap
-WHERE "ProportionofFemalesinLowerQuartile" < 0.25
+WHERE "ProportionofFemalesinLowerQuartile" < 0.1
 LIMIT 3;
 *****
-ESTIMATE PercentDifferenceinMeanHourlyWage
-FROM GenderPayGap
-WHERE "ProportionofFemalesinLowerQuartile" < 0.25
-GROUP BY EmployerSize
-LIMIT 3;
-*****
-ESTIMATE PercentDifferenceinMeanHourlyWage
+ESTIMATE EmployerSize, PercentDifferenceinMeanHourlyWage
 FROM GenderPayGap
 WHERE "ProportionofFemalesinLowerQuartile" < 0.25
 GROUP BY EmployerSize
