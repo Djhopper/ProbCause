@@ -23,7 +23,7 @@ def main():
     args = ['--db=estimate_examples.bdb', '--file=queries/query']
     results = send_request.main(args)
     for i, result in enumerate(results):
-        print "Result " + str(i) + ": \n" + str(results)
+        print "Result " + str(i) + ": \n" + json.dumps(result, indent=4)
 
 
 if __name__ == "__main__":
