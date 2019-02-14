@@ -19,7 +19,7 @@ def main():
     server_thread.start()
     time.sleep(0.5)  # XXX Bad way to ensure the server is definitely done setting up
 
-    args = ['--db=GenderPayGap.bdb', '--file=queries/query']
+    args = ['--db=estimate_examples.bdb', '--file=queries/query']
     results = send_request.main(args)
     print "Results: " + str(results)
 
