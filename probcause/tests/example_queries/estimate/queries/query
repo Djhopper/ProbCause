@@ -30,3 +30,11 @@ WHERE "ProportionofFemalesinLowerQuartile" < 0.25
 GROUP BY EmployerSize
 ORDER BY PercentDifferenceinMeanHourlyWage DESC
 LIMIT 3;
+*****
+SELECT EmployerSize, AVG(PercentDifferenceinMeanHourlyWage)
+FROM
+    (ESTIMATE EmployerSize, PercentDifferenceinMeanHourlyWage
+    FROM GenderPayGap
+    WHERE "ProportionofFemalesinLowerQuartile" < 0.25
+    GROUP BY EmployerSize
+    LIMIT 500;);
