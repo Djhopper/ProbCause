@@ -35,6 +35,6 @@ SELECT EmployerSize, AVG(PercentDifferenceinMeanHourlyWage) as "avg"
 FROM
     (ESTIMATE EmployerSize, PercentDifferenceinMeanHourlyWage
     FROM GenderPayGap
-    WHERE "ProportionofFemalesinLowerQuartile" < 0.25
+    WHERE "ProportionofFemalesinLowerQuartile" < 0.1
     LIMIT 500)
 GROUP BY EmployerSize;
