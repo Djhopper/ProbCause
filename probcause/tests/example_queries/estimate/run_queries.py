@@ -4,6 +4,7 @@ import probcause.server_side.server as server
 import probcause.client_side.send_request as send_request
 import threading
 import time
+import json
 
 ip = '128.232.98.213'
 port = 8082
@@ -21,7 +22,8 @@ def main():
 
     args = ['--db=estimate_examples.bdb', '--file=queries/query']
     results = send_request.main(args)
-    print "Results: " + str(results)
+    for i, result in enumerate(results):
+        print "Result " + str(i) + ": \n" + str(results)
 
 
 if __name__ == "__main__":
