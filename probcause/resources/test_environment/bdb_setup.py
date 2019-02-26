@@ -1,4 +1,4 @@
-from probcause.src.util import table_from_csv
+from probcause.src.util.table_from_csv import table_from_csv
 import bayeslite
 
 db_handle = 'crime.bdb'

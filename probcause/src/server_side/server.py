@@ -1,7 +1,7 @@
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import bayeslite
 from bayeslite import BQLError, BQLParseError, BayesDBException
-from probcause.src.util import conv_cursor_to_json
+from probcause.src.util.conv_cursor_to_json import conv_cursor_to_json
 import json
 
 """
