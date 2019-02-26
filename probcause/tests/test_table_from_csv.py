@@ -4,7 +4,7 @@ import bayeslite
 table_name = 'testTable'
 db_pathname = 'foo.bdb'
 url = 'https://query.data.world/s/3c26afdi4kinjoqe3idolsxxk2ph4b'  # from data.world
-file_name = 'wc_forecasts.csv'
+file_name = 'test_resources/wc_forecasts.csv'
 
 output1 = [
     "(u'2018-06-22 13:56:23 UTC', u'Brazil', u'E', 92.77421, 3.07229, 0.29255, 1.63175, 1.23547, 0.13278, 3.1247700000000003, 4.84411, 1.71934, 0.65263, 0.27308000000000004, 0.07429, 0, 0.92571, 0.65965, 0.45548999999999995, 0.29535, 0.1889, u'2018-06-22 13:57:55 UTC')",
