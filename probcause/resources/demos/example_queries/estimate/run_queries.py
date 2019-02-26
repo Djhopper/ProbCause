@@ -1,7 +1,5 @@
-from estimate_setup import db_handle
-import bayeslite
-import probcause.server_side.server as server
-import probcause.client_side.send_request as send_request
+import probcause.src.server_side.server as server
+import probcause.src.client_side.send_request as send_request
 import threading
 import time
 import json

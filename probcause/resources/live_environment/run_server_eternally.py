@@ -1,7 +1,7 @@
-#!/home/oscar/miniconda/envs/probcomp/bin/python
 import socket
-import probcause.server_side.server as server
+import probcause.src.server_side.server as server
 import time
+"""Runs indefinitely, restarting the server if/when it crashes"""
 while True:
 	try:
 		time.sleep(10)

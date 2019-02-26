@@ -1,9 +1,9 @@
-from probcause.util.table_from_csv import table_from_csv
+from probcause.src.util import table_from_csv
 import bayeslite
 
 db_handle = 'estimate_examples.bdb'
 csv_handle = 'GenderPayGap.csv'
-table_name = 'GenderPayGap2'
+table_name = 'GenderPayGap'
 
 
 def main():

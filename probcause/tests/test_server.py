@@ -1,4 +1,4 @@
-import probcause.server_side.server as server
+import probcause.src.server_side.server as server
 import threading
 import httplib
 import json

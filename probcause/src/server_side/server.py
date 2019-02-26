@@ -1,7 +1,7 @@
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import bayeslite
-from bayeslite import BQLError, BQLParseError, BayesDBException, BayesDBTxnError
-from probcause.util.conv_cursor_to_json import conv_cursor_to_json
+from bayeslite import BQLError, BQLParseError, BayesDBException
+from probcause.src.util import conv_cursor_to_json
 import json
 
 """
@@ -26,6 +26,14 @@ Or 'application/json' in the normal case:
         [response2 ],
         ...
         [response3 ]
+    ]
+    
+Where response1 looks like:
+    [
+        {"col1"="row1_value1", "col2"="row1_value2", ... },
+        {"col1"="row2_value1", "col2"="row2_value2", ... },
+        ...
+        {"col1"="rowN_value1", "col2"="rowN_value2", ... }
     ]
 """
 
