@@ -5,7 +5,7 @@ import time
 while True:
 	try:
 		time.sleep(10)
-		server.main('localhost', 8080)
+		server.main('', 8080)
 	except socket.error as e:
 		if e.errno == 98:
 			pass

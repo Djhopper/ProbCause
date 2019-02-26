@@ -33,6 +33,7 @@ def run(msg, server_address='128.232.98.213', server_port=8082):
     conn.request("POST", "/", msg)
 
     response = conn.getresponse().read()
+    print(response)
     return response
 
 
