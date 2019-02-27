@@ -20,7 +20,7 @@ with bayeslite.bayesdb_open(pathname=db_pathname) as bdb:
 	z = (x-random.rand()*2+1) ** 2 + y
 	data = data.append({'x':x, 'y':y, 'z':z}, ignore_index=True)
         bdb.sql_execute("INSERT INTO t VALUES(?, ?, ?, ?);", (name, x, y, z))
-    data.to_csv('data.csv')
+    data.to_csv('traffic_data.csv')
     # Do simulation
     bdb.execute(
         "CREATE POPULATION p FOR t (ignore name; x numerical; y numerical; z numerical)")
