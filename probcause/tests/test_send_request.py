@@ -25,8 +25,8 @@ def server_thread_function():
 
 
 def test_lines_to_queries():
-    test_files = ['test_query_files/' + f for f in os.listdir('test_query_files')]
-    output_files = ['test_queries/' + f for f in os.listdir('test_queries')]
+    test_files = ['test_resources/test_query_files/' + f for f in os.listdir('test_resources/test_query_files')]
+    output_files = ['test_resources/test_queries/' + f for f in os.listdir('test_resources/test_queries')]
     for i, f in enumerate(test_files):
         print('Checking queryfication of ' + f)
         lines = open(name=f, mode='r').readlines()
@@ -69,7 +69,7 @@ def test_no_db():
     server_thread.daemon = True
     server_thread.start()
     time.sleep(0.5)  # XXX Bad way to ensure the server is definitely done setting up
-    sys.argv = ['send_request.py', '--file=../tests/test_queries/1'] 
+    sys.argv = ['send_request.py', '--file=test_resources/test_queries/1'] 
     with pytest.raises(send_request.BadOptionsError) as e:
         send_request.main() 
     
@@ -111,6 +111,6 @@ def test_no_error_file_given():
     server_thread.start()
     time.sleep(0.5)  # XXX Bad way to ensure the server is definitely done setting up
 
-    sys.argv = ['send_request.py', '--db=foo2.bdb', '--file=../tests/test_queries/1']
+    sys.argv = ['send_request.py', '--db=foo2.bdb', '--file=test_resources/test_queries/1']
 
     send_request.main()
