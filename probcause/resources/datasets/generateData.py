@@ -1,3 +1,5 @@
+import numpy as np
+import pandas as pd
 from enum import Enum
 import random
 import csv
@@ -24,7 +26,14 @@ class Vehicle(Enum):
     Motorbike = "Motorbike"
 
 
-probability_vehicle = {Vehicle.Car: 0.33, Vehicle.Bicycle: 0.18, Vehicle.Pedestrian: 0.42, Vehicle.Motorbike: 0.07}
+probability_vehicle_given_speed_limit = {
+    20: {Vehicle.Car: 5, Vehicle.Motorbike: 8, Vehicle.Pedestrian: 20, Vehicle.Bicycle: 15},
+    30: {Vehicle.Car: 5, Vehicle.Motorbike: 3, Vehicle.Pedestrian: 10, Vehicle.Bicycle: 15},
+    40: {Vehicle.Car: 10, Vehicle.Motorbike: 6, Vehicle.Pedestrian: 4, Vehicle.Bicycle: 3},
+    50: {Vehicle.Car: 5, Vehicle.Motorbike: 1, Vehicle.Pedestrian: 0.1, Vehicle.Bicycle: 0.15},
+    60: {Vehicle.Car: 5, Vehicle.Motorbike: 1, Vehicle.Pedestrian: 0, Vehicle.Bicycle: 0},
+    70: {Vehicle.Car: 5, Vehicle.Motorbike: 1, Vehicle.Pedestrian: 0, Vehicle.Bicycle: 0},
+}
 vehicle_lethality_multiplier = {
     (Vehicle.Car, Vehicle.Car): 2,
     (Vehicle.Car, Vehicle.Bicycle): 1,
@@ -168,16 +177,28 @@ def seat_belt_lethality_multiplier(seat_belt, vehicle1, vehicle2):
 def main(n, file):
     data = [column_names]
     for rowNumber in range(n):
-        vehicle1 = weighted_random_choice(probability_vehicle)
+        speed_limit = -1
+        while not 20 <= speed_limit <= 70:
+            speed_limit = int(random.normalvariate(4, 2)) * 10
+        true_speed_limit = speed_limit
+        if random.uniform(0, 1) < 20 / n:
+            speed_limit = speed_limit * 8 / 5
 
-        vehicle2 = weighted_random_choice(probability_vehicle)
+        speed = -20
+        while not -15 <= speed <= 15:
+            speed = int(random.normalvariate(0, 8))
+        speed += speed_limit
+
+        vehicle1 = weighted_random_choice(probability_vehicle_given_speed_limit[true_speed_limit])
+
+        vehicle2 = weighted_random_choice(probability_vehicle_given_speed_limit[true_speed_limit])
 
         land_use = weighted_random_choice(probability_land_use)
 
         city = weighted_random_choice(probability_city)
 
         hour = random.randint(0, 23) if random.randint(0, 2) == 0 else random.randint(8, 10) if random.randint(0, 2) == 0 else random.randint(17, 20)
-        minute = random.randint(0, 60)
+        minute = random.randint(0, 59)
         time = format(hour, '02d')+":"+format(minute, '02d')
 
         month = random.randint(1, 12)
@@ -189,17 +210,6 @@ def main(n, file):
         distance_to_nearest_traffic_light = -1
         while distance_to_nearest_traffic_light < 0:
             distance_to_nearest_traffic_light = int(random.normalvariate(15, 10))+1
-
-        speed_limit = -1
-        while not 20 <= speed_limit <= 70:
-            speed_limit = int(random.normalvariate(4, 2))*10
-        if random.uniform(0, 1) < 20/n:
-            speed_limit = speed_limit * 8 / 5
-
-        speed = -1
-        while not -15 <= speed <= 15:
-            speed = int(random.normalvariate(0, 8))
-        speed += speed_limit
 
         seat_belt = "N/A" if Vehicle.Car not in (vehicle1, vehicle2) else \
             1 if random.uniform(0, 1) < probability_seat_belt_given_city[city] else 0
@@ -216,7 +226,7 @@ def main(n, file):
             seat_belt_lethality_multiplier(seat_belt, vehicle1, vehicle2) *\
             land_use_lethality_multiplier[land_use] *\
             city_lethality_multiplier[city] *\
-            0.04
+            0.02
         lethal = 1 if random.uniform(0, 1) < lethal_prob else 0
 
         vehicle_multiplier = vehicle_injury_multiplier[(vehicle1, vehicle2)] if (vehicle1, vehicle2) in vehicle_injury_multiplier \
@@ -260,4 +270,4 @@ def main(n, file):
 
 
 if __name__ == "__main__":
-    main(100000, "traffic_data.csv")
+    main(10000, "data.csv")
