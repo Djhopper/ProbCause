@@ -4,9 +4,9 @@ from enum import Enum
 import random
 import csv
 
-column_names = ["VehicleType", "SecondVehicleType", "Date", "Time", "RoadHasPavement", "DistanceToNearestTrafficLight",
-                "Speed Limit", "EstimatedSpeedOfCollision",  "SeatBeltUsed", "InjurySustained", "Lethal", "LandUse",
-                "City"]
+column_names = ["vehicle type", "second vehicle type", "date", "time", "road has pavement",
+                "distance to nearest traffic tight", "speed limit", "estimated speed of collision",
+                "seat belt used", "injury sustained", "lethal", "land use", "city"]
 
 
 def weighted_random_choice(choices):
@@ -167,9 +167,9 @@ def speed_lethality_multiplier(speed):
 def seat_belt_lethality_multiplier(seat_belt, vehicle1, vehicle2):
     if Vehicle.Car in (vehicle1, vehicle2):
         if seat_belt:
-            return 0.8
+            return 0.3
         else:
-            return 1.25
+            return 1.2
     else:
         return 1
 
@@ -226,7 +226,7 @@ def main(n, file):
             seat_belt_lethality_multiplier(seat_belt, vehicle1, vehicle2) *\
             land_use_lethality_multiplier[land_use] *\
             city_lethality_multiplier[city] *\
-            0.02
+            0.03
         lethal = 1 if random.uniform(0, 1) < lethal_prob else 0
 
         vehicle_multiplier = vehicle_injury_multiplier[(vehicle1, vehicle2)] if (vehicle1, vehicle2) in vehicle_injury_multiplier \
@@ -270,4 +270,4 @@ def main(n, file):
 
 
 if __name__ == "__main__":
-    main(10000, "data.csv")
+    main(250000, "traffic_data.csv")
