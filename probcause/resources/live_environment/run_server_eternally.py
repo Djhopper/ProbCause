@@ -4,8 +4,8 @@ import time
 """Runs indefinitely, restarting the server if/when it crashes"""
 while True:
 	try:
-		time.sleep(10)
 		server.main('', 8080)
+		time.sleep(10)
 	except socket.error as e:
 		if e.errno == 98:
 			pass

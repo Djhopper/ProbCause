@@ -60,32 +60,42 @@ class RequestHandler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         self.send_response(200)
-
+	popcolumns = "vehicle type,second vehicle type,date,time,road has pavement,distance to nearest traffic tight,speed limit,estimated speed of collision,seat belt used,injury sustained,lethal,land use,city"
+	sentinel = 0 
         try:
             content_length = int(self.headers['Content-Length'])
             text = self.rfile.read(content_length).decode("utf8")
-            db_name, queries = RequestHandler.text_to_queries(text)
+	    if 'xxxGET POPULATION COLUMNS' in text:
+	        sentinel = 1
+		print("SET SENTINEL")
+            if sentinel == 0:
+                db_name, queries = RequestHandler.text_to_queries(text)
         except UnicodeDecodeError:
             self.send_err("Error: Couldn't decode request, make sure it's utf8")
             return
         except AssertionError:
             self.send_err("Error: You must give at least 1 query.")
             return
-
-        results = []
-        with bayeslite.bayesdb_open(pathname=db_name) as bdb:
-            for query in queries:
-                try:
-                    if query[0:3].upper() != "SQL":
-                        results.append(conv_cursor_to_json(bdb.execute(query)))
-                    else:
-                        results.append(conv_cursor_to_json(bdb.sql_execute(query[4:])))
-                except (BQLError, BQLParseError, BayesDBException), e:
-                    self.send_err(e)
-                    return
+        
+	if sentinel != 1:
+	    print("Running queries.")
+            results = []
+            with bayeslite.bayesdb_open(pathname=db_name) as bdb:
+                for query in queries:
+                    try:
+                        if query[0:3].upper() != "SQL":
+                            results.append(conv_cursor_to_json(bdb.execute(query)))
+                        else:
+                            results.append(conv_cursor_to_json(bdb.sql_execute(query[4:])))
+                    except (BQLError, BQLParseError, BayesDBException), e:
+                        self.send_err(e)
+                        return
+        else:
+	    print("Skipped query execution")
 
         self.send_header('Content-type', 'application/json')
         self.end_headers()
+	results = popcolumns if sentinel==1 else results
         message = RequestHandler.results_to_json(results)
         self.wfile.write(message)
 
