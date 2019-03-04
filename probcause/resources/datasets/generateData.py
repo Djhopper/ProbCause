@@ -4,9 +4,9 @@ from enum import Enum
 import random
 import csv
 
-column_names = ["vehicle type", "second vehicle type", "date", "time", "road has pavement",
-                "distance to nearest traffic tight", "speed limit", "estimated speed of collision",
-                "seat belt used", "injury sustained", "lethal", "land use", "city"]
+column_names = ["vehicle_type", "second_vehicle_type", "date", "time", "road_has_pavement",
+                "distance_to_nearest_traffic_light", "speed_limit", "estimated_speed_of_collision",
+                "seat_belt_used", "injury_sustained", "lethal", "land_use", "city"]
 
 
 def weighted_random_choice(choices):
