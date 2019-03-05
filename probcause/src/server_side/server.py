@@ -60,7 +60,7 @@ class RequestHandler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         self.send_response(200)
-	popcolumns = "vehicle type,second vehicle type,date,time,road has pavement,distance to nearest traffic tight,speed limit,estimated speed of collision,seat belt used,injury sustained,lethal,land use,city"
+	popcolumns = "vehicle_type,second_vehicle_type,road_has_pavement,distance_to_nearest_traffic_tight,speed_limit,estimated_speed_of_collision,seat_belt_used,injury_sustained,lethal,land_use,city"
 	sentinel = 0 
         try:
             content_length = int(self.headers['Content-Length'])
