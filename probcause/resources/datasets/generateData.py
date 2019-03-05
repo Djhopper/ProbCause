@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 import pandas as pd
 from enum import Enum
@@ -6,7 +8,7 @@ import csv
 
 column_names = ["vehicle_type", "second_vehicle_type", "date", "time", "road_has_pavement",
                 "distance_to_nearest_traffic_light", "speed_limit", "estimated_speed_of_collision",
-                "seat_belt_used", "injury_sustained", "lethal", "land_use", "city"]
+                "speed_of_collision_range" + "seat_belt_used", "injury_sustained", "lethal", "land_use", "city"]
 
 
 def weighted_random_choice(choices):
@@ -60,19 +62,6 @@ vehicle_injury_multiplier = {
 }
 
 
-class LandUse(Enum):
-    a = "Residential"
-    b = "Commercial"
-    c = "Industrial"
-    d = "Agricultural"
-    e = "Transport"
-
-
-probability_land_use = {LandUse.a: 0.41, LandUse.b: 0.17, LandUse.c: 0.06, LandUse.d: 0.28, LandUse.e: 0.08}
-probability_pavement_given_land_use = {LandUse.a: 0.45, LandUse.b: 0.62, LandUse.c: 0.23, LandUse.d: 0.03, LandUse.e: 0.31}
-land_use_lethality_multiplier = {LandUse.a: 1, LandUse.b: 0.94, LandUse.c: 1.06, LandUse.d: 0.98, LandUse.e: 1.10}
-
-
 class City(Enum):
     a = "Nairobi"
     b = "Mombasa"
@@ -88,6 +77,27 @@ probability_city = {City.a: 33, City.b: 12, City.c: 3, City.d: 3, City.e: 2.8, C
 probability_seat_belt_given_city = {City.a: 0.83, City.b: 0.76, City.c: 0.45, City.d: 0.56, City.e: 0.23, City.f: 0.51, City.h: 0.41}
 city_lethality_multiplier = {City.a: 1.03, City.b: 1.02, City.c: 0.97, City.d: 0.98,
                              City.e: 0.99, City.f: 1.01, City.h: 1.00}
+
+
+class LandUse(Enum):
+    a = "Residential"
+    b = "Commercial"
+    c = "Industrial"
+    d = "Agricultural"
+    e = "Transport"
+
+
+probability_land_use_given_city = {
+    City.a: {LandUse.a: 0.41, LandUse.b: 0.17, LandUse.c: 0.06, LandUse.d: 0.28, LandUse.e: 0.08},
+    City.b: {LandUse.a: 0.7, LandUse.b: 0.1, LandUse.c: 0.1, LandUse.d: 0.28, LandUse.e: 0.08},
+    City.c: {LandUse.a: 0.30, LandUse.b: 0.4, LandUse.c: 0.1, LandUse.d: 0.34, LandUse.e: 0.08},
+    City.d: {LandUse.a: 0.41, LandUse.b: 0.21, LandUse.c: 0.02, LandUse.d: 0.23, LandUse.e: 0.13},
+    City.e: {LandUse.a: 0.9, LandUse.b: 0.18, LandUse.c: 0.06, LandUse.d: 0.28, LandUse.e: 0.09},
+    City.f: {LandUse.a: 0.2, LandUse.b: 0.32, LandUse.c: 0.34, LandUse.d: 0.28, LandUse.e: 0.08},
+    City.h: {LandUse.a: 0.5, LandUse.b: 0.32, LandUse.c: 0.3, LandUse.d: 0.1, LandUse.e: 0.08},
+}
+probability_pavement_given_land_use = {LandUse.a: 0.45, LandUse.b: 0.62, LandUse.c: 0.23, LandUse.d: 0.03, LandUse.e: 0.31}
+land_use_lethality_multiplier = {LandUse.a: 1, LandUse.b: 0.94, LandUse.c: 1.06, LandUse.d: 0.98, LandUse.e: 1.10}
 
 
 def time_lethality_multiplier(h):
@@ -111,7 +121,7 @@ def pavement_lethality_multiplier(pavement, vehicle1, vehicle2):
     if pavement:
         return 1
     if Vehicle.Car in (vehicle1, vehicle2) or Vehicle.Motorbike in (vehicle1, vehicle2):
-        return 1.3
+        return 2.4
     else:
         return 1
 
@@ -193,9 +203,9 @@ def main(n, file):
 
         vehicle2 = weighted_random_choice(probability_vehicle_given_speed_limit[true_speed_limit])
 
-        land_use = weighted_random_choice(probability_land_use)
-
         city = weighted_random_choice(probability_city)
+
+        land_use = weighted_random_choice(probability_land_use_given_city[city])
 
         hour = random.randint(0, 23) if random.randint(0, 2) == 0 else random.randint(8, 10) if random.randint(0, 2) == 0 else random.randint(17, 20)
         minute = random.randint(0, 59)
@@ -244,6 +254,9 @@ def main(n, file):
             5
         injury = 1 if lethal or random.uniform(0, 1) < injury_prob else 0
 
+        min_speed = int(math.floor(speed/5.0)*5)
+        speed_of_collision_range = str(min_speed) + " - " + str(min_speed+5)
+
         row = [
             vehicle1.value,
             vehicle2.value,
@@ -253,6 +266,7 @@ def main(n, file):
             distance_to_nearest_traffic_light,
             speed_limit,
             speed,
+            speed_of_collision_range,
             seat_belt,
             injury,
             lethal,
@@ -262,12 +276,12 @@ def main(n, file):
         row = [str(x) for x in row]
         data.append(row)
 
-    print("dead ", sum(int(row[10]) for row in data[1:]))
-    print("injured ", sum(int(row[9])-int(row[10]) for row in data[1:]))
+    print("dead ", sum(int(row[11]) for row in data[1:]))
+    print("injured ", sum(int(row[10])-int(row[11]) for row in data[1:]))
     with open(file, "w", newline='') as my_csv:
         csv_writer = csv.writer(my_csv)
         csv_writer.writerows(data)
 
 
 if __name__ == "__main__":
-    main(250000, "traffic_data.csv")
+    main(25000, "traffic_data.csv")
